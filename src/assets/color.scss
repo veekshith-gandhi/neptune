@@ -1,0 +1,22 @@
+:root {
+    --theme-color: #0a1530;
+    --theme-color: #1362FC;
+    --secondary-color: #627EEA;
+    --theme-color-hover: #034bd9;
+    --theme-color-light: #aac7fe;
+    --theme-color-dark: #012875;
+    --main-bg: rgba(19, 98, 252, 0.1);
+    --white: #ffffff;
+    --black: #000000;
+    --invalid: rgb(246, 123, 123);
+    --box-shadow: rgba(19, 98, 252, 0.3);
+    --tableBorderColor: #F2F2F2;
+}
+
+.text_danger {
+    color: var(--invalid) !important;
+}
+.text_primary {
+    color: var(--primary) !important;
+}
+

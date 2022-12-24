@@ -1,0 +1,95 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+// -------- common ---------- //
+  :root {
+    font-size: 14px;
+  }
+  body {
+    background-color: #FCFCFC;
+  }
+  .primary_btn {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--white);
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    background-color: var(--theme-color);
+    border: 1px solid var(--theme-color);
+    padding: 10px 20px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none !important;
+  }
+  .primary_border_btn {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--theme-color);
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    background-color: var(--white);
+    border: 1px solid var(--theme-color);
+    padding: 10px 20px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none !important;
+  }
+  .border_radius_10 {
+    border-radius: 10px;
+  }
+  .border_radius_4 {
+    border-radius: 4px;
+  }
+  a:hover, a:focus, a.active {
+    text-decoration: none;
+  }
+  .invalid {
+    position: absolute;
+    top: -15px;
+    right: 0;
+    font-size: .75rem;
+    color: var(--invalid);
+  }
+
+  // -------- custom table --------- //
+  .custom_table {
+    position: relative;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    thead {
+      tr {
+        th {
+          position: sticky;
+          top: 0;
+          font-size: 1.125rem;
+          font-family: "semi-bold";
+          padding: 10px;
+          border-bottom: 1px solid var(--tableBorderColor);
+          background-color: var(--white);
+          z-index: 99;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          padding: 10px;
+          border-bottom: 1px solid var(--tableBorderColor);
+        }
+      }
+    }
+  }
+  // -------- custom table --------- //
+
+// -------- common ---------- //

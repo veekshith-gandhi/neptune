@@ -1,0 +1,13 @@
+.main_container {
+    height: calc(100% - 77px);
+    display: flex;
+    .sidebar_container {
+        width: 17rem;
+        flex: 0 0 17rem;
+        height: 100%;
+    }
+    .main_content_container {
+        flex: 1 1 10px;
+        height: 100%;
+    }
+}
