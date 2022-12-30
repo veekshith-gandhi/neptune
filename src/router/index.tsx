@@ -1,12 +1,12 @@
-import { MainContainer } from "../containers/main-container";
-import { User }  from "../containers/user";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { Locations } from "../locations";
-import { StoredKeys } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
-import { AppStore } from "../model/store.model";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { StoredKeys } from "../constants";
+import { MainContainer } from "../containers/main-container";
+import { User } from "../containers/user";
 import { UserModelReducer } from "../containers/user/model";
 import { setLogin } from "../containers/user/redux/action";
+import { Locations } from "../locations";
+import { AppStore } from "../model/store.model";
 
 export const Router = () => {
 	const dispatch = useDispatch();
@@ -21,7 +21,6 @@ export const Router = () => {
 			dispatch(setLogin(JSON.parse(storedData)));
 		}
 	}
-
 	if ((storedData && Object.keys(JSON.parse(storedData)).length) || userReducer.userDetails.access) {
 		return (
 			<Routes>

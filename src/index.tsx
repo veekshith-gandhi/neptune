@@ -1,16 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
 import "antd/dist/antd.min.css";
-import "./styles.scss";
-import "./assets/color.scss";
-import "./assets/font.scss";
-import reportWebVitals from "./reportWebVitals";
-import configureAppStore from "./store";
+import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import "./assets/color.scss";
+import "./assets/font.scss";
 import { setupInterceptors } from "./middleware/network";
+import reportWebVitals from "./reportWebVitals";
 import { Router } from "./router";
-const store = configureAppStore();
+import { store } from "./store";
+import "./styles.scss";
+
 setupInterceptors();
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -20,7 +19,8 @@ root.render(
 		<BrowserRouter>
 			<Router />
 		</BrowserRouter>
-	</Provider>);
+	</Provider>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
