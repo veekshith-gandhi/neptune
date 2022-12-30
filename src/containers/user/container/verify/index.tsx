@@ -28,6 +28,7 @@ export const Verify: FunctionComponent = () => {
 
 	useEffect(() => {
 		if (userReducer.verifyCompleted === ResponseType.FULFILLED) {
+			message.success(i18Get("Your email is verified successfully, please login", config.lang));
 			navigate(Locations.LOGIN);
 			dispatch(clearVerify());
 		}

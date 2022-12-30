@@ -6,7 +6,7 @@ export interface ForgotPasswordData {
 }
 
 export interface LoginDetails {
-    username: string | undefined;
+    email: string | undefined;
     password: string | undefined;
 }
 
@@ -14,7 +14,17 @@ export interface SignUpDetails {
     password1: string | undefined;
     password2: string | undefined;
     email: string | undefined;
-    username: string | undefined;
+}
+
+export interface ResetPasswordDetails {
+    token: string | undefined;
+    uidb64: string | undefined;
+	password: string | undefined;
+}
+
+export interface ValidateTokenDetails {
+    token: string | undefined;
+    uidb64: string | undefined;
 }
 
 export interface UserModelReducer {
@@ -24,4 +34,6 @@ export interface UserModelReducer {
     verifyCompleted: ResponseType.FULFILLED | ResponseType.REJECTED | null;
     loginDetails: UserDetails;
     forgotPasswordCompleted: ResponseType.FULFILLED | ResponseType.REJECTED | null;
+    resetPasswordCompleted: ResponseType.FULFILLED | ResponseType.REJECTED | null;
+    validateTokenCompleted: ResponseType.FULFILLED | ResponseType.REJECTED | null;
 }

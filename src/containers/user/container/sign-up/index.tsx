@@ -1,3 +1,4 @@
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -12,10 +13,11 @@ import { clearSignUp, signUp } from "../../redux/action";
 export const SignUp: FunctionComponent = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const [invalid, setInvalid] = useState({ userName: false, email: false, password: false, confirmPassword: false, confirmPasswordNotMatch: false });
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+	const [invalid, setInvalid] = useState({ userName: false, email: false, password: false, confirmPassword: false, confirmPasswordNotMatch: false, passwordNotStrong: false });
 	const [loading, setLoading] = useState(false);
 	const userReducer = useSelector((state: AppStore) => state.userReducer);
-	const userNameRef = useRef<HTMLInputElement>(null);
 	const emailRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
 	const confirmPasswordRef = useRef<HTMLInputElement>(null);
@@ -33,16 +35,16 @@ export const SignUp: FunctionComponent = () => {
 	}, [userReducer.signUpCompleted]);
 
 	const validate = (): boolean => {
-		if (!userNameRef.current?.value || !userNameRef.current?.value.trim()) {
-			setInvalid( { ...invalid, userName: true });
-			return false;
-		}
 		if (!emailRef.current?.value || !emailRef.current?.value.trim() || !emailRegex.test(emailRef.current?.value)) {
 			setInvalid( { ...invalid, email: true });
 			return false;
 		}
 		if (!passwordRef.current?.value || !passwordRef.current?.value.trim()) {
 			setInvalid( { ...invalid, password: true });
+			return false;
+		}
+		if (passwordRef.current?.value && (passwordRef.current?.value.length < 6)) {
+			setInvalid( { ...invalid, passwordNotStrong: true });
 			return false;
 		}
 		if (!confirmPasswordRef.current?.value || !confirmPasswordRef.current?.value.trim()) {
@@ -61,7 +63,6 @@ export const SignUp: FunctionComponent = () => {
 	const onLogin = () => {
 		if (validate()) {
 			const payload: SignUpDetails = {
-				username: userNameRef.current?.value,
 				email: emailRef.current?.value,
 				password1: passwordRef.current?.value,
 				password2: confirmPasswordRef.current?.value
@@ -79,15 +80,6 @@ export const SignUp: FunctionComponent = () => {
 				</div>
 				<div className="login_input_box mb-3">
 					<div className="login_label">
-						<I18 tkey="Username" />
-					</div>
-					<div className="login_input_container position-relative">
-						<input onChange={() => setInvalid({ ...invalid, userName: false })} ref={userNameRef} type="text"/>
-						{invalid.userName ? <span className="invalid"><I18 tkey="Please enter username" /></span> : ""}
-					</div>
-				</div>
-				<div className="login_input_box mb-3">
-					<div className="login_label">
 						<I18 tkey="Email" />
 					</div>
 					<div className="login_input_container position-relative">
@@ -99,19 +91,34 @@ export const SignUp: FunctionComponent = () => {
 					<div className="login_label">
 						<I18 tkey="Password" />
 					</div>
-					<div className="login_input_container position-relative">
-						<input onChange={() => setInvalid({ ...invalid, password: false })} ref={passwordRef} type="password"/>
+					<div className="login_input_container position-relative show_password_input_container">
+						<input onChange={() => setInvalid({ ...invalid, password: false, passwordNotStrong: false })} ref={passwordRef} type={showPassword ? "text" : "password"}/>
 						{invalid.password ? <span className="invalid"><I18 tkey="Please enter password" /></span> : ""}
+						{!invalid.confirmPassword && invalid.passwordNotStrong ? <span className="invalid"><I18 tkey="Password must be higher than 6" /></span> : ""}
+						{showPassword ? 
+							<span onClick={() => setShowPassword(!showPassword)} className="show_password"><EyeInvisibleOutlined /></span> 
+							: 
+							<span onClick={() => setShowPassword(!showPassword)} className="show_password"><EyeOutlined /></span>
+						}
 					</div>
 				</div>
 				<div className="login_input_box mb-3">
 					<div className="login_label">
 						<I18 tkey="Confirm Password" />
 					</div>
-					<div className="login_input_container position-relative">
-						<input onChange={() => setInvalid({ ...invalid, confirmPassword: false, confirmPasswordNotMatch: false })} ref={confirmPasswordRef} type="password"/>
+					<div className="login_input_container position-relative show_password_input_container">
+						<input 
+							onChange={() => setInvalid({ ...invalid, confirmPassword: false, confirmPasswordNotMatch: false })} 
+							ref={confirmPasswordRef} 
+							type={showConfirmPassword ? "text" : "password"}
+						/>
 						{invalid.confirmPassword ? <span className="invalid"><I18 tkey="Please enter password" /></span> : ""}
 						{!invalid.confirmPassword && invalid.confirmPasswordNotMatch ? <span className="invalid"><I18 tkey="Please doesn't match" /></span> : ""}
+						{showConfirmPassword ? 
+							<span onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="show_password"><EyeInvisibleOutlined /></span> 
+							: 
+							<span onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="show_password"><EyeOutlined /></span>
+						}
 					</div>
 				</div>
 				<div className="text-center pt-3">

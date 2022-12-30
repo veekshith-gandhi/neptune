@@ -1,15 +1,11 @@
 import { FunctionComponent } from "react";
-import { Basicinfo } from "../basicinfo";
-import { LocationDetails } from "../location-details";
-import { TabNavigationBar } from "../tab-navbar";
 
-
-export const AddHotelComponent: FunctionComponent = () => {
-	return (
-		<div>
-			<TabNavigationBar />
-			<Basicinfo/>
-			<LocationDetails/>
+export const AddHotel: FunctionComponent = () => {
+	
+	return (	
+		<div className="h-100 d-flex align-items-center justify-content-center">
+			Add Hotel Feature is under development
 		</div>
 	);
 };
+

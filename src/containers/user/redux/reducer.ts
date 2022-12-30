@@ -9,7 +9,9 @@ const initialState: UserModelReducer = {
 	signUpCompleted: null,
 	verifyCompleted: null,
 	loginDetails: { access: "", refresh: "" },
-	forgotPasswordCompleted: null
+	forgotPasswordCompleted: null,
+	resetPasswordCompleted: null,
+	validateTokenCompleted: null
 };
 
 const reducer = (state = initialState, action: Action) => {
@@ -77,6 +79,38 @@ const reducer = (state = initialState, action: Action) => {
 			return {
 				...state,
 				forgotPasswordCompleted: null
+			};
+
+		case Events.VALIDATE_TOKEN_FULFILLED:
+			return {
+				...state,
+				validateTokenCompleted: ResponseType.FULFILLED
+			};
+		case Events.VALIDATE_TOKEN_REJECTED:
+			return {
+				...state,
+				validateTokenCompleted: ResponseType.REJECTED
+			};
+		case Events.CLEAR_VALIDATE_TOKEN:
+			return {
+				...state,
+				validateTokenCompleted: null
+			};
+
+		case Events.RESET_PASSWORD_FULFILLED:
+			return {
+				...state,
+				resetPasswordCompleted: ResponseType.FULFILLED
+			};
+		case Events.RESET_PASSWORD_REJECTED:
+			return {
+				...state,
+				resetPasswordCompleted: ResponseType.REJECTED
+			};
+		case Events.CLEAR_RESET_PASSWORD:
+			return {
+				...state,
+				resetPasswordCompleted: null
 			};
 
 		case Events.SET_LOGIN:

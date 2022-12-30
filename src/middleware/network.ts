@@ -33,22 +33,29 @@ const handleResponse = (response: AxiosResponse<any, any>) => {
 		return Promise.reject(response);
 	}
 	if (response && response.status && (response.status === 403 || response.status === 401)) {
-		localStorage.removeItem(StoredKeys.USER_DETAILS);
-		location.reload();
-		message.error(response.data && response.data.message ? response.data.message : "Something went wrong");
+		if (response.config.url?.includes("login")) {
+			message.warning(response.data && response.data.detail ? response.data.detail : "Something went wrong");
+		}
+		else {
+			localStorage.removeItem(StoredKeys.USER_DETAILS);
+			if (!response.config.url?.includes("password-reset")) {
+				location.reload();
+			}		
+			message.error(response.data && response.data.detail ? response.data.detail : "Something went wrong");
+		}
 		return Promise.reject(response);
 	}
 	if (response && response.status.toString().startsWith("5")) {
-		message.error(response.data && response.data.message ? response.data.message : "Something went wrong");
+		message.error(response.data && response.data.detail ? response.data.detail : "Something went wrong");
 		return Promise.reject(response);
 	}
 	if (response.status.toString().startsWith("4")) {
-		message.error(response.data && response.data.message ? response.data.message : "Something went wrong");
+		message.error(response.data && response.data.detail ? response.data.detail : "Something went wrong");
 		return Promise.reject(response);
 	}
-	if (response.data && response.data.message && response.status.toString().startsWith("2")) {
+	if (response.data && response.data.detail && response.status.toString().startsWith("2")) {
 		if (response.status !== 200) {
-			response.data.message && message.success(response.data.message);
+			response.data.detail && message.success(response.data.detail);
 		}
 		return response;
 	}

@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../../../config";
 import { UserDetails } from "../../../model/user.model";
-import { ForgotPasswordData, LoginDetails, SignUpDetails } from "../model";
+import { ForgotPasswordData, LoginDetails, ResetPasswordDetails, SignUpDetails, ValidateTokenDetails } from "../model";
 import Events from "./events";
 
 export const login = (loginDetails: LoginDetails) => ({
@@ -36,11 +36,31 @@ export const clearVerify = () => ({
 
 export const forgotPassword = (forgotDetails: ForgotPasswordData) => ({
 	type: Events.FORGOT_PASSWORD,
-	payload: axios.post(`${config.API_URL}/account/forgot-password`, forgotDetails)
+	payload: axios.post(`${config.API_URL}/account/request-reset-email`, forgotDetails)
 });
 
 export const clearForgotPassword = () => ({
 	type: Events.CLEAR_FORGOT_PASSWORD,
+	payload: {}
+});
+
+export const validateToken = (validateTokenDetails: ValidateTokenDetails) => ({
+	type: Events.VALIDATE_TOKEN,
+	payload: axios.get(`${config.API_URL}/account/password-reset/${validateTokenDetails.uidb64}/${validateTokenDetails.token}/`)
+});
+
+export const clearValidateToken = () => ({
+	type: Events.CLEAR_VALIDATE_TOKEN,
+	payload: {}
+});
+
+export const resetPassword = (resetDetails: ResetPasswordDetails) => ({
+	type: Events.RESET_PASSWORD,
+	payload: axios.post(`${config.API_URL}/account/password-reset-complete`, resetDetails)
+});
+
+export const clearResetPassword = () => ({
+	type: Events.CLEAR_RESET_PASSWORD,
 	payload: {}
 });
 

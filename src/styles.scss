@@ -60,7 +60,21 @@ html, body {
     font-size: .75rem;
     color: var(--invalid);
   }
-
+  .show_password_input_container {
+    position: relative;
+    > input {
+      padding-right: 40px !important;
+    }
+    .show_password {
+      position: absolute;
+      top: 4px;
+      right: 15px;
+      color: var(--theme-color);
+      font-size: 17px;
+      cursor: pointer;
+    }
+  }
+  
   // -------- custom table --------- //
   .custom_table {
     position: relative;

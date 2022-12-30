@@ -4,9 +4,9 @@ import I18 from "../../i18";
 import { Locations } from "../../locations";
 import { ForgotPassword } from "./container/forgot-password";
 import { Login } from "./container/login";
+import { ResetPassword } from "./container/reset-password";
 import { SignUp } from "./container/sign-up";
 import { Verify } from "./container/verify";
-
 
 export const User: FunctionComponent = () => {
     
@@ -62,6 +62,7 @@ export const User: FunctionComponent = () => {
 				<Route path={Locations.SIGN_UP} element={<SignUp />}/>
 				<Route path={Locations.VERIFY} element={<Verify />}/>
 				<Route path={Locations.FORGOT_PASSWORD} element={<ForgotPassword />}/>
+				<Route path={Locations.RESET_PASSWORD} element={<ResetPassword />}/>
 				<Route
 					path="*"
 					element={<Navigate to={Locations.LOGIN} replace />}

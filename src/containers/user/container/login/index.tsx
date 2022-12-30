@@ -1,8 +1,9 @@
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ResponseType, StoredKeys } from "../../../../constants";
+import { emailRegex, ResponseType, StoredKeys } from "../../../../constants";
 import I18 from "../../../../i18";
 import { Locations } from "../../../../locations";
 import { AppStore } from "../../../../model/store.model";
@@ -13,10 +14,11 @@ import "./login.scss";
 export const Login: FunctionComponent = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [showPassword, setShowPassword] = useState(false);
 	const [invalid, setInvalid] = useState({ email: false, password: false });
 	const [loading, setLoading] = useState(false);
 	const userReducer = useSelector((state: AppStore) => state.userReducer);
-	const usernameRef = useRef<HTMLInputElement>(null);
+	const emailRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -34,7 +36,7 @@ export const Login: FunctionComponent = () => {
 	}, [userReducer.loginCompleted]);
 
 	const validate = (): boolean => {
-		if (!usernameRef.current?.value ||  !usernameRef.current?.value.trim()) {
+		if (!emailRef.current?.value ||  !emailRef.current?.value.trim() || !emailRegex.test(emailRef.current?.value)) {
 			setInvalid( { ...invalid, email: true });
 			return false;
 		}
@@ -48,7 +50,7 @@ export const Login: FunctionComponent = () => {
 	const onLogin = () => {
 		if (validate()) {
 			const payload: LoginDetails = {
-				username: usernameRef.current?.value,
+				email: emailRef.current?.value,
 				password: passwordRef.current?.value
 			};
 			setLoading(true);
@@ -67,7 +69,7 @@ export const Login: FunctionComponent = () => {
 						<I18 tkey="Username" />
 					</div>
 					<div className="login_input_container position-relative">
-						<input onChange={() => setInvalid({ ...invalid, email: false })} ref={usernameRef} type="email"/>
+						<input onChange={() => setInvalid({ ...invalid, email: false })} ref={emailRef} type="email"/>
 						{invalid.email ? <span className="invalid"><I18 tkey="Please enter email" /></span> : ""}
 					</div>
 				</div>
@@ -75,9 +77,14 @@ export const Login: FunctionComponent = () => {
 					<div className="login_label">
 						<I18 tkey="Password" />
 					</div>
-					<div className="login_input_container position-relative">
-						<input onChange={() => setInvalid({ ...invalid, password: false })} ref={passwordRef} type="password"/>
+					<div className="login_input_container position-relative show_password_input_container">
+						<input onChange={() => setInvalid({ ...invalid, password: false })} ref={passwordRef} type={showPassword ? "text" : "password"}/>
 						{invalid.password ? <span className="invalid"><I18 tkey="Please enter password" /></span> : ""}
+						{showPassword ? 
+							<span onClick={() => setShowPassword(!showPassword)} className="show_password"><EyeInvisibleOutlined /></span> 
+							: 
+							<span onClick={() => setShowPassword(!showPassword)} className="show_password"><EyeOutlined /></span>
+						}
 					</div>
 				</div>
 				<div className="mt-3 text-right">
