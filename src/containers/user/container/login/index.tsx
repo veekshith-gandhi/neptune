@@ -1,7 +1,6 @@
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { emailRegex, ResponseType, StoredKeys } from "../../../../constants";
 import I18 from "../../../../i18";
@@ -66,7 +65,7 @@ export const Login: FunctionComponent = () => {
 				</div>
 				<div className="login_input_box mb-3">
 					<div className="login_label">
-						<I18 tkey="Username" />
+						<I18 tkey="Email" />
 					</div>
 					<div className="login_input_container position-relative">
 						<input onChange={() => setInvalid({ ...invalid, email: false })} ref={emailRef} type="email"/>

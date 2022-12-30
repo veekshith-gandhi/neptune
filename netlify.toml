@@ -1,0 +1,4 @@
+[[redirects]]
+from = "/*
+to = "/verify-email/"
+status =200
