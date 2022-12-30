@@ -21,6 +21,7 @@ type PlacesProps = {
 };
 
 export const FormDetails: FunctionComponent<any> = ({ setOffice }: PlacesProps) => {
+	console.log(setOffice);
 	const { submitedId } = useAppSelector(state => state.hotel);
 	const [countryStore, setCountryStore] = useState<CountryEntity[]>([]);
 	const [selectedItem, setSelectedItem] = useState<string>("");

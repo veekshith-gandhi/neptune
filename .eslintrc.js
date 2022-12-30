@@ -24,7 +24,7 @@ module.exports = {
         "@typescript-eslint"
     ],
 	"rules": {
-		"camelcase": "error",
+		// "camelcase": "error",
 		"curly": "error",
 		"default-case": "error",
 		"eqeqeq": "error",
@@ -102,8 +102,8 @@ module.exports = {
 			"error",
 			"last"
 		],
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": ["error"],
+        // "no-unused-vars": "off",
+        // "@typescript-eslint/no-unused-vars": ["error"],
         "no-undef": "error",
         "react/react-in-jsx-scope": "off",
         "import/no-named-as-default": "off",
