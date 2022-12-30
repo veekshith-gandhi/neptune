@@ -43,15 +43,15 @@ module.exports = {
 		// 	6
 		// ],
 		"no-alert": "error",
-		"no-console": "warn",
-		"no-empty-function": [
-			"error",
-			{
-				"allow": [
-					"constructors"
-				]
-			}
-		],
+		// "no-console": "warn",
+		// "no-empty-function": [
+		// 	"error",
+		// 	{
+		// 		"allow": [
+		// 			"constructors"
+		// 		]
+		// 	}
+		// ],
 		"no-lonely-if": "error",
 		"no-nested-ternary": "error",
 		"no-var": "error",
