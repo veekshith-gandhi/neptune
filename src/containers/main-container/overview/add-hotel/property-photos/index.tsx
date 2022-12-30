@@ -1,5 +1,5 @@
 import { CaretRightOutlined } from "@ant-design/icons";
-import { Button, Card, Collapse, Form, Progress, Space, Typography, Upload, UploadProps } from "antd";
+import { Button, Card, Collapse, Form, Progress, Space, Typography, Upload } from "antd";
 import AntdImgCrop from "antd-img-crop";
 import type { UploadFile } from "antd/es/upload/interface";
 const Panel = Collapse.Panel;
@@ -34,10 +34,10 @@ const layout = {
 
 export const PropertyPhotos : FunctionComponent = () => {
 	const [fileList, setFileList] = useState<UploadFile[]>([]);
-	const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-		setFileList(newFileList);
-	}; 
-
+	// const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+	// 	setFileList(newFileList);
+	// }; 
+	console.log(setFileList);
 
 	return (
 		<Card style={{ width: "140vh", margin: "auto" }}>
