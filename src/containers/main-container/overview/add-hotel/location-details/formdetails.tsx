@@ -14,13 +14,12 @@ const layout = {
 	labelCol: { span: 8 },
 	wrapperCol: { span: 12 }
 };
-/*global , google*/
 /*eslint no-undef: "error"*/
-type PlacesProps = {
-    setOffice: (position: google.maps.LatLngLiteral) => void;
-};
-
-export const FormDetails: FunctionComponent<any> = ({ setOffice }: PlacesProps) => {
+// type PlacesProps = {
+//     setOffice: (position: google.maps.LatLngLiteral) => void;
+// };
+// { setOffice }: PlacesProps
+export const FormDetails: FunctionComponent<any> = () => {
 	// console.log(setOffice);
 	const { submitedId } = useAppSelector(state => state.hotel);
 	const [countryStore, setCountryStore] = useState<CountryEntity[]>([]);
