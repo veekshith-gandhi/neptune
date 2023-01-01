@@ -15,3 +15,5 @@ export default class BaseApiService {
 		return axios.create({ baseURL: config.API_URL, headers: { Authorization: this.getAccessToken() } });
 	}
 }
+
+export const { axiosInstance } = new BaseApiService();

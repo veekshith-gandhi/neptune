@@ -2,6 +2,7 @@ import { CaretRightOutlined, UploadOutlined } from "@ant-design/icons";
 import { Button, Card, Checkbox, Collapse, Form, Input, Progress, Select, Space, Typography, Upload, UploadProps } from "antd";
 import ImgCrop from "antd-img-crop";
 import type { UploadFile } from "antd/es/upload/interface";
+import { RcFile } from "antd/lib/upload";
 import { FunctionComponent, useState } from "react";
 const Panel = Collapse.Panel;
 const { Option } = Select;
@@ -44,18 +45,18 @@ export const FinanceDetails : FunctionComponent = () => {
 	};
 
 	const onPreview = async (file: UploadFile) => {
-		const src = file.url as string;
-		// 	if (!src) {
-		// 		src = await new Promise(resolve => {
-		// 			const reader = new FileReader();
-		// 			reader.readAsDataURL(file.originFileObj as RcFile);
-		// 			reader.onload = () => resolve(reader.result as string);
-		// 		});
-		// 	}
-		// 	const image = new Image();
-		// 	image.src = src;
+		let src = file.url as string;
+		if (!src) {
+			src = await new Promise(resolve => {
+				const reader = new FileReader();
+				reader.readAsDataURL(file.originFileObj as RcFile);
+				reader.onload = () => resolve(reader.result as string);
+			});
+		}
+		const image = new Image();
+		image.src = src;
 		// 	console.log(image);
-		console.log(src);
+		// console.log(src);
 
 	// 	const imgWindow = window.open(src);
 	// 	imgWindow?.document.write(image.outerHTML);
@@ -67,7 +68,7 @@ export const FinanceDetails : FunctionComponent = () => {
 	// };
 	const onFinish = (e: any) => {
 		e.propertyimage = fileList;
-		console.log(e);
+		// console.log(e);
 	};
 
 	return (

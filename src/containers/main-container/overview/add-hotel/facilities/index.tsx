@@ -1,10 +1,10 @@
-import { Button, Card, Checkbox, Layout, Space, Typography } from "antd";
+import { Card, Radio, Space, Typography } from "antd";
 import Progress from "antd/es/progress";
 import { FunctionComponent, useState } from "react";
+import "./facilities-amenities.scss";
 
-
-const {  Sider, Content } = Layout;
 const { Title } = Typography;
+
 const Amenities = [
 	{
 		id: 1,
@@ -45,16 +45,15 @@ const Amenitiesfacilites = [
 		type: ["common arena", "normal arena", "simple arena"]
 	}
 ];
-console.log(Amenities, Amenitiesfacilites);
 
 export const FacilitiesDetails : FunctionComponent = () => {
 	const [storeId, setStoreId] = useState(1);
 
 	return (
-		<Card style={{ width: "140vh", margin: "auto" }}>
+		<Card style={{ width: "140vh", height: "600px", margin: "auto" }}>
 			<div style={{ display: "flex", justifyContent: "space-between" }}>
 				<div>
-					<Title level={4}>Facilies</Title>
+					<Title level={4}>Facilites</Title>
 					<p>Please select general facilities available at your property</p>
 				</div>
 				<div>
@@ -64,7 +63,8 @@ export const FacilitiesDetails : FunctionComponent = () => {
 					</Space>
 				</div>
 			</div>
-			<Card >
+			
+			{/* <Card >
 				<p>All Amenities</p>
 				<Layout>
 					<Sider style={{ background: "#f6f6f6", textAlign: "center" }}>
@@ -91,7 +91,27 @@ export const FacilitiesDetails : FunctionComponent = () => {
 						</Content>
 					</Layout>
 				</Layout>
-			</Card>
+			</Card> */}
+			<div style={{ display: "flex" }}>
+				<Card title="All Amenities" bordered={true} style={{ width: 200 }}>
+					<p>Card content</p>
+					<p>Card content</p>
+					<p>Card content</p>
+					<p>Card content</p>    
+					<p>Card content</p>
+					<p>Card content</p>
+				</Card>
+				<Card title="Card title" bordered={true} style={{ width: 300 }}>
+					<Space direction="vertical">
+						<Radio>Card content</Radio>
+						<Radio>Card content</Radio>
+						<Radio>Card content</Radio>
+						<Radio>Card content</Radio>
+						<Radio>Card content</Radio>
+						<Radio>Card content</Radio>
+					</Space>
+				</Card>
+			</div>
 		</Card>
 	);
 };

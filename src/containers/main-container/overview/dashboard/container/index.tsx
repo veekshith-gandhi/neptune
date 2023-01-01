@@ -1,15 +1,14 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ResponseType } from "../../../../../constants";
+import I18 from "../../../../../i18";
+import { Locations } from "../../../../../locations";
 import { AppStore } from "../../../../../model/store.model";
+import { DashboardTable } from "../components";
 import { HotelList } from "../modal";
 import { clearGetAllHotel, getAllHotel } from "../redux/action";
-import { DashboardTable } from "../components";
 import "./dashboard.scss";
-import I18 from "../../../../../i18";
-import { useNavigate } from "react-router-dom";
-import { Locations } from "../../../../../locations";
 
 export const Dashboard: FunctionComponent = () => {
 	const dispatch = useDispatch();

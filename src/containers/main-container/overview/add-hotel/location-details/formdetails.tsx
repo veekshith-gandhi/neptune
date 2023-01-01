@@ -3,11 +3,11 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { submitBasicLocationInfo } from "../../../../../services/hotel-form-api-service";
-import { getCountryInfo } from "../../../../../services/state-country-api-service";
+import { getCountryInfo, getStateInfo } from "../../../../../services/state-country-api-service";
 import { useAppSelector } from "../../../../../store";
 import { apiErrorParser } from "../../../../../utils/error-parser";
 import { addLocationHotelCreation } from "../redux/action";
-import type { CountryEntity, HotelCreationLocationDetails } from "../types";
+import { CountryEntity, HotelCreationLocationDetails, StateEntity } from "../types";
 
 const { Search } = Input;
 const layout = {
@@ -21,9 +21,10 @@ type PlacesProps = {
 };
 
 export const FormDetails: FunctionComponent<any> = ({ setOffice }: PlacesProps) => {
-	console.log(setOffice);
+	// console.log(setOffice);
 	const { submitedId } = useAppSelector(state => state.hotel);
 	const [countryStore, setCountryStore] = useState<CountryEntity[]>([]);
+	const [stateStore, setStateStore] = useState < StateEntity[]>([]);
 	const [selectedItem, setSelectedItem] = useState<string>("");
 	const [api, contextHolder] = notification.useNotification();
 	const dispatch = useDispatch();
@@ -37,11 +38,11 @@ export const FormDetails: FunctionComponent<any> = ({ setOffice }: PlacesProps) 
 		try {
 			await submitBasicLocationInfo<any>(
 				{
-					country: 3,
+					country: e.country,
 					address: e.address,
 					pincode: e.pincode,
 					city: e.city,
-					state: 1
+					state: e.state
 				},
 				submitedId
 			);
@@ -54,17 +55,17 @@ export const FormDetails: FunctionComponent<any> = ({ setOffice }: PlacesProps) 
 	const checkBoxChecking = (e: any) => {
 		e.target.checked ? setIsDissabled(false) : setIsDissabled(true);
 	};
-
-	// useEffect( async () => {
-	// 	if (selectedItem) {
-	// 		const data = await getStateInfo(selectedItem);
-	// 	}
-	// }, [selectedItem]);
-	
+	useEffect(() => {
+		async function fetchState() {
+			const id  = selectedItem ? selectedItem : "98";
+			const data = await getStateInfo(id);
+			setStateStore(data?.data);
+		}
+		fetchState();
+	}, [selectedItem]);
 	useEffect(() => {
 		async function fetchData() {
 			const { data } = await getCountryInfo();
-			// console.log(data);
 			setCountryStore(data);
 		}
 		fetchData();
@@ -117,7 +118,16 @@ export const FormDetails: FunctionComponent<any> = ({ setOffice }: PlacesProps) 
 				</Col>
 				<Col span={8}>
 					<Form.Item label="State" name={["state"]} rules={[{ required: true }]}>
-						<Input allowClear type="name" />
+						<Select
+							showSearch
+							placeholder="State"
+							value={selectedItem}
+							filterOption={(input, option) => (option?.label ?? "").includes(input)}
+							onChange={e => {
+								setSelectedItem(e);
+							}}
+							options={stateStore.map((item: any) => ({ id: item.id, value: item.id, label: item.name }))}
+						/>
 					</Form.Item>
 				</Col>
 			</Row>

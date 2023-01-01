@@ -10,7 +10,7 @@ type LatLngLiteral = google.maps.LatLngLiteral
 
 export const GoogleMaps: FunctionComponent = () => {
 	const [office, setOffice] = useState < LatLngLiteral>();
-	console.log("office", office);
+	// console.log("office", office);
 	const center = useMemo(() => ({ lat: 12.9716, lng: 77.5946 }), []);
 
 	const mapRef = useRef<GoogleMap>();
@@ -26,8 +26,10 @@ export const GoogleMaps: FunctionComponent = () => {
 		// disableDefaultUI: true,
 		clickableIcons: false
 	}), []);
-
-	if (!isLoaded) {return <div>is loading</div>;}
+	if (office) {return <div>map</div>;}
+	if (!isLoaded) {
+		return <div>is loading</div>;
+	}
 	return (
 		<div className="main-map-container">
 			<GoogleMap zoom={10} center={center} onLoad={onLoad} options={options} mapContainerClassName="map-container"></GoogleMap>

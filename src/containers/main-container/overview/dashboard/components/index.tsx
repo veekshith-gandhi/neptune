@@ -1,86 +1,102 @@
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Button, Popconfirm } from "antd";
 import moment from "moment";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import I18 from "../../../../../i18";
-import { DashboardTableProps, HotelList } from "../modal";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Locations } from "../../../../../locations";
+import { deleteHotelInformation, getHotelInformation } from "../../../../../services/hotel-form-api-service";
+import { addSubmitedIdToHotel } from "../../add-hotel/redux/action";
+import { DashboardTableProps } from "../modal";
 
-export const DashboardTable: FunctionComponent<DashboardTableProps> = (props) => {
-	
-	return (		
-		props.loading ? 
-			<div className="d-flex align-items-center justify-content-center">
-				<I18 tkey="Loading..." /> 
-			</div>
-			: 
-			<table className="custom_table">
-				<thead>
-					<tr>
-						<th>
+export const DashboardTable: FunctionComponent<DashboardTableProps> = props => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const [hotelList, setHotelList] = useState<any[]>([]);
+	async function fetchDetails() {
+		const { data } = await getHotelInformation();
+		console.log(data);
+		setHotelList(data);
+	}
+	useEffect(() => {
+		fetchDetails();
+	}, []);
 
-						</th>
-						<th>
-							<I18 tkey="Hotel Name" />
-						</th>
-						<th>
-							<I18 tkey="Hotel Star" />
-						</th>
-						<th>
-							<I18 tkey="Location" />
-						</th>
-						<th>
-							<I18 tkey="State" />
-						</th>
-						<th>
-							<I18 tkey="Mobile" />
-						</th>
-						<th>
-							<I18 tkey="Email" />
-						</th>
-						<th>
-							<I18 tkey="Created Date" />
-						</th>
-						<th>
-							<I18 tkey="Action" />
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{props.hotelList.length ? props.hotelList.map((el: HotelList, i: number) => {
-						return (
-							<tr key={`hotel_list_${i}`}>
-								<td>
+	const deleteHotelDetails = async (id:any) => {
+		await deleteHotelInformation(id);
+		fetchDetails();
+	};
 
-								</td>
-								<td>
-									{el.hotelName}
-								</td>
-								<td>
-									{el.hotelStar}
-								</td>
-								<td>
-									{el.location}
-								</td>
-								<td>
-									{el.state}
-								</td>
-								<td>
-									{el.mobile}
-								</td>
-								<td>
-									{el.email}
-								</td>
-								<td>
-									{moment(el.createdDate).format("DD/MM/YYYY")}
-								</td>
-								<td>
+	return props.loading ? (
+		<div className="d-flex align-items-center justify-content-center">
+			<I18 tkey="Loading..." />
+		</div>
+	) : (
+		<table className="custom_table">
+			<thead>
+				<tr>
+					<th></th>
+					<th>
+						<I18 tkey="Hotel ID" />
+					</th>
+					<th>
+						<I18 tkey="Hotel Name" />
+					</th>
+					<th>
+						<I18 tkey="Ratings" />
+					</th>
+					<th>
+						<I18 tkey="Destination" />
+					</th>
+					<th>
+						<I18 tkey="Created Date" />
+					</th>
+					<th>
+						<I18 tkey="Status" />
+					</th>
+					<th>
+						<I18 tkey="State" />
+					</th>
+					<th>
+						<I18 tkey="Action" />
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{hotelList.map((i, j) => {
+					return (
+						<tr key={i.id}>
+							<td></td>
+							<td>{i?.id ? j + 1 : "0"}</td>
+							<td>{i?.property_name ? i.property_name : "Palace"}</td>
+							<td>{i?.rating}</td>
+							<td>{i?.current_location ? i.current_location : "Bangalore"}</td>
+							<td>{moment(i?.taking_booking_since).format("DD/MM/YYYY")}</td>
+							<td>{i?.is_active ? "Approved" : "Pending"}</td>
+							<td>{i?.is_active ? "Published" : "Pending"}</td>
+							<td>
+								<Button
+									type="primary"
+									onClick={() => {
+										dispatch(addSubmitedIdToHotel(i.id));
+										navigate(Locations.ADD_HOTEL);
+									}}
+								>
 									<EditOutlined className="mr-2" />
-									<DeleteOutlined />
-								</td>
-							</tr>
-						);
-					}) : ""}
-				</tbody>
-			</table>
+								</Button>
+							</td>
+							<td>
+								<Popconfirm onConfirm={() => deleteHotelDetails(i.id)} title="Delete the task" okText="Yes" cancelText="No">
+									<Button type="primary">
+										<DeleteOutlined />
+									</Button>
+								</Popconfirm>
+							</td>
+						</tr>
+					);
+				})}
+			</tbody>
+		</table>
 	);
 };
-

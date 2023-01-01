@@ -23,7 +23,6 @@ export const Basicinfo:FunctionComponent  = () => {
 	const dispatch = useDispatch();
 	const [dateString, setDateString] = useState("");
 	const [percent, setPercent] = useState(0);
-
 	const onFinish = async (e: HotelCreationBasicInput) => {
 		e.date = dateString;
 		setPercent(percent + 20);
@@ -45,7 +44,6 @@ export const Basicinfo:FunctionComponent  = () => {
 			api.error({ message: apiErrorParser(error), placement: "topRight" });
 		}
 	};
-	
 	const onChange: DatePickerProps["onChange"] = (date, dateString) => {
 		setDateString(dateString);
 	};
