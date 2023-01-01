@@ -1,53 +1,12 @@
 import { Card, Radio, Space, Typography } from "antd";
 import Progress from "antd/es/progress";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import "./facilities-amenities.scss";
 
 const { Title } = Typography;
 
-const Amenities = [
-	{
-		id: 1,
-		type: "gservice"
-	},
-	{
-		id: 2,
-		type: "outdooractivites"
-	},
-	{
-		id: 3,
-		type: "common arena"
-	},
-	{
-		id: 4,
-		type: "gservice"
-	},
-	{
-		id: 5,
-		type: "outdooractivites"
-	},
-	{
-		id: 6,
-		type: "common arena"
-	}
-];
-const Amenitiesfacilites = [
-	{
-		id: 1,
-		type: ["gservice", "lservice", "mservice"]
-	},
-	{
-		id: 2,
-		type: ["outdooractivites", "indroractivites", "indoroutdooractivites"]
-	},
-	{
-		id: 3,
-		type: ["common arena", "normal arena", "simple arena"]
-	}
-];
-
 export const FacilitiesDetails : FunctionComponent = () => {
-	const [storeId, setStoreId] = useState(1);
+	// const [storeId, setStoreId] = useState(1);
 
 	return (
 		<Card style={{ width: "140vh", height: "600px", margin: "auto" }}>
