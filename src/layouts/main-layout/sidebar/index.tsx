@@ -12,7 +12,14 @@ export const Sidebar: FunctionComponent = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="sidebar_container">
+    <div
+      className="sidebar_container"
+      style={{
+        minWidth: '240px',
+        maxWidth: '240px',
+        borderRight: '0.2px solid #80808036',
+      }}
+    >
       <div
         onClick={() => navigate(Locations.DASHBOARD)}
         className={`sidebar_item ${

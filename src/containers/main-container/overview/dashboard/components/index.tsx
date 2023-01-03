@@ -9,7 +9,7 @@ import { Locations } from '../../../../../routes';
 import {
   deleteHotelInformation,
   getHotelInformation,
-} from '../../../../../services/hotel-form-api-service';
+} from '../../../../../services/hotel-api-service';
 import { addSubmitedIdToHotel } from '../../add-hotel/redux/action';
 import { DashboardTableProps } from '../modal';
 

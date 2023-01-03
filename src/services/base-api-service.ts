@@ -1,22 +1,15 @@
 import axios from 'axios';
 import config from '../config';
+import { store } from '../store';
 export default class BaseApiService {
-  getAccessToken() {
-    // const userDetailString  = localStorage.getItem(StoredKeys.USER_DETAILS);
-    // if (userDetailString) {
-    // 	const userDetails = JSON.parse(window.atob(userDetailString));
-    // 	return "Bearer " + userDetails?.tokens?.access;
-    // } else {
-    // 	return "";
-    // }
-    return '';
-  }
-  get axiosInstance() {
+  protected get axiosInstance() {
+    const accessToken = store.getState().userReducer.accessToken;
+
+    // Login for refresh stays here
+
     return axios.create({
       baseURL: config.API_URL,
-      headers: { Authorization: this.getAccessToken() },
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
   }
 }
-
-export const { axiosInstance } = new BaseApiService();
