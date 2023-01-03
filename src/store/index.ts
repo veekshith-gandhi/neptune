@@ -1,22 +1,22 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useSelector } from "react-redux";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage/session";
-import Promise from "redux-promise-middleware";
+import { configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import promise from 'redux-promise-middleware';
 
-import loggerMiddleware from "./logger";
-import rootReducer from "./reducers";
+import rootReducer from './reducers';
 
-const persistConfig = {
-	key: "root",
-	storage
-};
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer({ key: 'root', storage }, rootReducer);
+
 export const store = configureStore({
-	reducer: persistedReducer,
-	middleware: [loggerMiddleware, Promise]
+  reducer: persistedReducer,
+  middleware: (gDm) => gDm({ serializableCheck: false }).concat(promise),
 });
+
 export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch: () => AppDispatch = useDispatch;
