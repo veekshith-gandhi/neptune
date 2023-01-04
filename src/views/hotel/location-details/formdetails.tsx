@@ -41,6 +41,7 @@ export const FormDetails: FunctionComponent<any> = () => {
   const [countryStore, setCountryStore] = useState<CountryEntity[]>([]);
   const [stateStore, setStateStore] = useState<StateEntity[]>([]);
   const [selectedItem, setSelectedItem] = useState<string>('');
+  const [percent, setPercent] = useState(0);
   const [api, contextHolder] = notification.useNotification();
   const dispatch = useDispatch();
   const { ready, value, setValue } = usePlacesAutocomplete();

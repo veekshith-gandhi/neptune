@@ -42,7 +42,7 @@ export const Basicinfo: FunctionComponent = () => {
   const [percent, setPercent] = useState(0);
   const onFinish = async (e: HotelCreationBasicInput) => {
     e.date = dateString;
-    setPercent(percent + 20);
+    setPercent(20);
     try {
       const { data } = await submitBasicHotelInfo<HotelResponse>(
         {

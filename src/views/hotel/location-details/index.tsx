@@ -1,10 +1,11 @@
 import { Card, Progress, Space, Typography } from 'antd';
 
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { GoogleMaps } from './googlemap';
 
 const { Title } = Typography;
 export const LocationDetails: FunctionComponent = () => {
+  const [percent, setPercent] = useState(40);
   return (
     <Card style={{ margin: '5px 50px' }}>
       <div
