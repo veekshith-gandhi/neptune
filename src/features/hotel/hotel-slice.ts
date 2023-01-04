@@ -10,13 +10,13 @@ import {
 
 interface AddHotelState {
   addBasicInfoLoadingState: AsyncThunkStates;
+  hotelId: string;
+  roomId: string;
   basic: HotelCreationBasicInput;
   editHotelData: HotelEntity | null;
-  hotelId: string;
   progressPercentage: number;
   location: HotelCreationLocationDetails;
   room: HotelRoomsCreation;
-  roomId: string;
   roomprice: HotelRoomPriceCreation;
 }
 
@@ -127,6 +127,9 @@ export const hotelSlice = createSlice({
     addRoomDetails: (state, action) => {
       state.room = action.payload;
     },
+    addRoomPrice: (state, action) => {
+      state.roomprice = action.payload;
+    },
     setRoomId: (state, action) => {
       state.roomId = action.payload;
     },
@@ -142,4 +145,5 @@ export const {
   addLocationDetails,
   addRoomDetails,
   setRoomId,
+  addRoomPrice,
 } = hotelSlice.actions;

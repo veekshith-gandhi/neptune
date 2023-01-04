@@ -60,7 +60,7 @@ export const Basicinfo: FunctionComponent = () => {
       );
       dispatch(addBasicInfo(e));
       dispatch(setHotelId(data.id));
-      dispatch(setProgressPercentage(20));
+      dispatch(setProgressPercentage(10));
       document
         ?.getElementById('location-details-ref')
         ?.scrollIntoView({ behavior: 'smooth' });

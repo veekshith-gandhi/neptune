@@ -18,16 +18,17 @@ import {
 import moment from 'moment';
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addRoomDetails, setRoomId } from '../../../features/hotel/hotel-slice';
+import {
+  addRoomDetails,
+  addRoomPrice,
+  setProgressPercentage,
+  setRoomId,
+} from '../../../features/hotel/hotel-slice';
 import {
   submitHotelRoomInformation,
   submitHotelRoomPriceInformation,
 } from '../../../services/hotel-api-service';
 import { useAppSelector } from '../../../store';
-import {
-  addHotelRoomsPriceCreation,
-  addSubmitedIdToRoom,
-} from '../redux/action';
 import { HotelRoomPriceCreation, HotelRoomsCreation } from '../types';
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
@@ -45,6 +46,7 @@ const layout = {
   wrapperCol: { span: 12 },
 };
 export const RoomsAndSpacesDetails: FunctionComponent = () => {
+  const { progressPercentage } = useAppSelector((state) => state.hotel);
   const [api, contextHolder] = notification.useNotification();
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
@@ -68,6 +70,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
       );
       dispatch(addRoomDetails(e));
       dispatch(setRoomId(data.id));
+      dispatch(setProgressPercentage(40));
       api.success({ message: 'saved Success', placement: 'topRight' });
     } catch (error) {
       api.error({ message: 'error', placement: 'topRight' });
@@ -92,8 +95,9 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
         },
         roomId
       );
-      dispatch(addHotelRoomsPriceCreation(e));
-      dispatch(addSubmitedIdToRoom(data.id));
+      dispatch(addRoomPrice(e));
+      dispatch(setRoomId(data.id));
+      dispatch(setProgressPercentage(50));
       api.success({ message: 'saved Success', placement: 'topRight' });
     } catch (error) {
       api.error({ message: 'error', placement: 'topRight' });
@@ -112,7 +116,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
         </div>
         <div>
           <Progress
-            percent={40}
+            percent={progressPercentage}
             status="active"
             strokeColor={{ from: '#108ee9', to: '#87d068' }}
           />
@@ -120,7 +124,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
             <Progress
               type="circle"
               width={50}
-              percent={40}
+              percent={progressPercentage}
               strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
             />
           </Space>

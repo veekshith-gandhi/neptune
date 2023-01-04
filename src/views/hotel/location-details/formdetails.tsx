@@ -60,7 +60,7 @@ export const FormDetails: FunctionComponent<any> = () => {
         hotelId
       );
       dispatch(addLocationDetails(e));
-      dispatch(setProgressPercentage(40));
+      dispatch(setProgressPercentage(20));
       api.success({ message: 'saved Success', placement: 'topRight' });
       document
         ?.getElementById('amenities-container-ref')
@@ -92,28 +92,6 @@ export const FormDetails: FunctionComponent<any> = () => {
       {...layout}
       layout="vertical"
       name="nest-messages"
-      fields={[
-        {
-          name: ['address'],
-          value: location?.address,
-        },
-        {
-          name: ['country'],
-          value: location?.country,
-        },
-        {
-          name: ['state'],
-          value: location?.state,
-        },
-        {
-          name: ['city'],
-          value: location?.city,
-        },
-        {
-          name: ['pincode'],
-          value: location?.pincode,
-        },
-      ]}
     >
       {contextHolder}
       <Form.Item label="Search Location">
