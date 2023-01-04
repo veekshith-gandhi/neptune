@@ -201,7 +201,12 @@ export const FormDetails: FunctionComponent<any> = () => {
       </Form.Item>
       <Form.Item>
         <Space>
-          <Button type="primary" disabled={isDissabled} htmlType="submit">
+          <Button
+            type="primary"
+            onClick={() => setPercent(40)}
+            disabled={isDissabled}
+            htmlType="submit"
+          >
             Save and Submit
           </Button>
         </Space>
