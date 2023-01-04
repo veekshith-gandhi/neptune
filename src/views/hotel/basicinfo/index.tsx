@@ -24,10 +24,7 @@ import { addBasicInfo } from '../../../features/hotel/hotel-slice';
 import { submitBasicHotelInfo } from '../../../services/hotel-api-service';
 import { AppDispatch, useAppSelector } from '../../../store';
 import { apiErrorParser } from '../../../utils/error-parser';
-import {
-  addBasicInfoToHotelCreation,
-  addSubmitedIdToHotel,
-} from '../redux/action';
+import { addSubmitedIdToHotel } from '../redux/action';
 import type { HotelCreationBasicInput } from '../types';
 
 const { Title } = Typography;
@@ -61,8 +58,10 @@ export const Basicinfo: FunctionComponent = () => {
         submitedId
       );
       dispatch(addBasicInfo(e));
-      dispatch(addBasicInfoToHotelCreation(e));
       dispatch(addSubmitedIdToHotel(data.id));
+      document
+        ?.getElementById('location-details-ref')
+        ?.scrollIntoView({ behavior: 'smooth' });
       api.success({ message: 'saved Success', placement: 'topRight' });
     } catch (error) {
       api.error({ message: apiErrorParser(error), placement: 'topRight' });
@@ -72,7 +71,7 @@ export const Basicinfo: FunctionComponent = () => {
     setDateString(dateString);
   };
   return (
-    <Card style={{ width: '140vh', margin: 'auto' }}>
+    <Card style={{ margin: '5px 50px' }}>
       {contextHolder}
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
@@ -105,8 +104,12 @@ export const Basicinfo: FunctionComponent = () => {
             value: basic.propertyName,
           },
           {
-            name: ['email'],
-            value: basic.email,
+            name: ['starRating'],
+            value: basic.starRating,
+          },
+          {
+            name: ['contactNumber'],
+            value: basic.contactNumber,
           },
           {
             name: ['email'],
@@ -116,7 +119,7 @@ export const Basicinfo: FunctionComponent = () => {
         onFinish={onFinish}
       >
         <Form.Item
-          rules={[{ required: true }]}
+          rules={[{ required: true, message: 'Please input property name' }]}
           label="Property Name"
           hasFeedback
           name="propertyName"
@@ -125,7 +128,7 @@ export const Basicinfo: FunctionComponent = () => {
         </Form.Item>
         <Form.Item
           label="Hotel Star Ratings"
-          rules={[{ required: true }]}
+          rules={[{ required: true, message: 'Please select hotel rating' }]}
           hasFeedback
           name="starRating"
         >
@@ -137,17 +140,19 @@ export const Basicinfo: FunctionComponent = () => {
             <Option value="5">5</Option>
           </Select>
         </Form.Item>
+
         <Form.Item
           label="Taking booking since year"
-          rules={[{ required: true }]}
+          rules={[{ required: true, message: 'Please select year' }]}
           hasFeedback
           name="date"
         >
           <DatePicker onChange={onChange} picker="year" />
         </Form.Item>
+
         <Form.Item
           label="Contact Number"
-          rules={[{ required: true }]}
+          rules={[{ required: true, message: 'Please input contact number' }]}
           hasFeedback
           name="contactNumber"
         >
@@ -155,7 +160,7 @@ export const Basicinfo: FunctionComponent = () => {
         </Form.Item>
         <Form.Item
           label="Email"
-          rules={[{ required: true }]}
+          rules={[{ required: true, message: 'Please input valid email id' }]}
           hasFeedback
           name="email"
         >

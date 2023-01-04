@@ -101,7 +101,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
     }
   };
   return (
-    <Card id="rooms-spaces-ref" style={{ width: '140vh', margin: 'auto' }}>
+    <Card id="rooms-spaces-ref" style={{ margin: '5px 50px' }}>
       {contextHolder}
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>

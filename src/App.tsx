@@ -12,8 +12,8 @@ import { Verify } from './containers/user/container/verify';
 import MainLayout from './layouts/main-layout';
 import { Locations } from './routes';
 import { persistor, store } from './store';
-import { AddHotelComponent } from './views/add-hotel/container';
 import DashboardView from './views/dashboard';
+import { AddHotelComponent } from './views/hotel/container';
 import NotFoundView from './views/not-found';
 
 import './styles/main.scss';

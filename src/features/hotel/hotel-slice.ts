@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AsyncThunkStates } from '../../@types';
 import { HotelEntity } from '../../@types/entity/hotel-entity';
-import { HotelCreationBasicInput } from '../../views/add-hotel/types';
+import { HotelCreationBasicInput } from '../../views/hotel/types';
 
 interface AddHotelState {
   addBasicInfoLoadingState: AsyncThunkStates;

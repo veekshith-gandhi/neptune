@@ -52,7 +52,7 @@ export const PropertyPhotos: FunctionComponent = () => {
   };
 
   return (
-    <Card style={{ width: '140vh', margin: 'auto' }}>
+    <Card style={{ margin: '5px 50px' }}>
       {contextHolder}
       <div
         id="property-photos-ref"
