@@ -1,11 +1,12 @@
 import { Card, Progress, Space, Typography } from 'antd';
 
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
+import { useAppSelector } from '../../../store';
 import { GoogleMaps } from './googlemap';
 
 const { Title } = Typography;
 export const LocationDetails: FunctionComponent = () => {
-  const [percent, setPercent] = useState(40);
+  const { progressPercentage } = useAppSelector((state) => state.hotel);
   return (
     <Card style={{ margin: '5px 50px' }}>
       <div
@@ -18,7 +19,7 @@ export const LocationDetails: FunctionComponent = () => {
         </div>
         <div>
           <Progress
-            percent={40}
+            percent={progressPercentage}
             status="active"
             strokeColor={{ from: '#108ee9', to: '#87d068' }}
           />
@@ -26,7 +27,7 @@ export const LocationDetails: FunctionComponent = () => {
             <Progress
               type="circle"
               width={50}
-              percent={40}
+              percent={progressPercentage}
               strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
             />
           </Space>

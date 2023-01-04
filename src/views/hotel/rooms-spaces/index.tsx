@@ -18,12 +18,13 @@ import {
 import moment from 'moment';
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { addRoomDetails, setRoomId } from '../../../features/hotel/hotel-slice';
 import {
   submitHotelRoomInformation,
   submitHotelRoomPriceInformation,
 } from '../../../services/hotel-api-service';
+import { useAppSelector } from '../../../store';
 import {
-  addHotelRoomsCreation,
   addHotelRoomsPriceCreation,
   addSubmitedIdToRoom,
 } from '../redux/action';
@@ -47,10 +48,8 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
   const [api, contextHolder] = notification.useNotification();
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
-
   const dispatch = useDispatch();
-  let submitedId = '';
-  let submitedRoomId = '';
+  const { hotelId, roomId } = useAppSelector((state) => state.hotel);
   const onFinishRooms = async (e: HotelRoomsCreation) => {
     try {
       const { data } = await submitHotelRoomInformation<any>(
@@ -60,15 +59,15 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
           available_room: e.availablerooms,
           room_type: e.roomtype,
           is_smoking_allowed: e.smokingallowed,
-          room_breadth: String(e.breadth),
-          room_length: String(e.length),
+          room_breadth: e.breadth.toString(),
+          room_length: e.length.toString(),
           extra_bed: e.extrabed,
-          hotel: submitedId ? submitedId : '',
+          hotel: hotelId ? hotelId : '',
         },
-        submitedRoomId
+        roomId
       );
-      dispatch(addHotelRoomsCreation(e));
-      dispatch(addSubmitedIdToRoom(data.id));
+      dispatch(addRoomDetails(e));
+      dispatch(setRoomId(data.id));
       api.success({ message: 'saved Success', placement: 'topRight' });
     } catch (error) {
       api.error({ message: 'error', placement: 'topRight' });
@@ -89,9 +88,9 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
           number_of_child: e.extrachild,
           available_from: String(dateFrom),
           available_to: String(dateTo),
-          hotel: submitedId,
+          hotel: hotelId,
         },
-        submitedRoomId
+        roomId
       );
       dispatch(addHotelRoomsPriceCreation(e));
       dispatch(addSubmitedIdToRoom(data.id));
@@ -222,10 +221,14 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="View" name={['view']}>
-                    <Select placeholder="select Number" allowClear>
-                      <Option value="1">1</Option>
-                      <Option value="2">2</Option>
+                  <Form.Item
+                    name={['extrabed']}
+                    label="Extra Bed"
+                    rules={[{ required: true }]}
+                  >
+                    <Select placeholder="Yes" allowClear>
+                      <Option value={true}>yes</Option>
+                      <Option value={false}>No</Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -253,20 +256,6 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
                   <Form.Item name={['squarefeet']} rules={[{ required: true }]}>
                     <Select>
                       <Option value="yes">Sq.ft</Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={12}>
-                  <Form.Item
-                    name={['extrabed']}
-                    label="Extra Bed"
-                    rules={[{ required: true }]}
-                  >
-                    <Select placeholder="Yes" allowClear>
-                      <Option value={true}>yes</Option>
-                      <Option value={false}>No</Option>
                     </Select>
                   </Form.Item>
                 </Col>

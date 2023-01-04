@@ -17,24 +17,24 @@ export interface HotelResponse {
 
 export interface HotelEntity {
   id: string;
-  completion: Completion;
+  completion?: Completion;
   current_location?: null;
   property_name: string;
-  hotel_name?: null;
+  hotel_name: null;
   hotel_type: string;
   rating: number;
   taking_booking_since: string;
   contact_number: string;
   email: string;
-  address?: null;
-  city?: null;
-  pincode?: null;
-  created_at: string;
-  updated_at: string;
+  address: string;
+  city: string;
+  pincode: string;
+  created_at?: string;
+  updated_at?: string;
   default: boolean;
   is_active: boolean;
-  state?: null;
-  country?: null;
+  state: string;
+  country: string;
 }
 export interface Completion {
   basic_info: boolean;

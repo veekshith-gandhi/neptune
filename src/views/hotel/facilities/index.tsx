@@ -9,7 +9,7 @@ export const FacilitiesDetails: FunctionComponent = () => {
   // const [storeId, setStoreId] = useState(1);
 
   return (
-    <Card style={{ margin: '5px 50px' }}>
+    <Card style={{ margin: '5px 50px' }} id="amenities-container-ref">
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           <Title level={4}>Facilites</Title>

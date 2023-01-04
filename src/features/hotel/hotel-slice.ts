@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AsyncThunkStates } from '../../@types';
 import { HotelEntity } from '../../@types/entity/hotel-entity';
-import { HotelCreationBasicInput } from '../../views/hotel/types';
+import {
+  HotelCreationBasicInput,
+  HotelCreationLocationDetails,
+  HotelRoomPriceCreation,
+  HotelRoomsCreation,
+} from '../../views/hotel/types';
 
 interface AddHotelState {
   addBasicInfoLoadingState: AsyncThunkStates;
@@ -9,6 +14,10 @@ interface AddHotelState {
   editHotelData: HotelEntity | null;
   hotelId: string;
   progressPercentage: number;
+  location: HotelCreationLocationDetails;
+  room: HotelRoomsCreation;
+  roomId: string;
+  roomprice: HotelRoomPriceCreation;
 }
 
 const initialState: AddHotelState = {
@@ -22,7 +31,41 @@ const initialState: AddHotelState = {
     contactNumber: '',
     email: '',
   },
+  location: {
+    lat: '',
+    lng: '',
+    locality: '',
+    address: '',
+    city: '',
+    state: '',
+    country: '',
+    pincode: '',
+  },
+  room: {
+    roomname: '',
+    description: '',
+    availablerooms: 1,
+    roomtype: '',
+    smokingallowed: true,
+    length: '',
+    breadth: '',
+    squarefeet: '',
+    extrabed: true,
+  },
+  roomprice: {
+    baseoccupancy: 1,
+    baseprice: '',
+    extraadults: 1,
+    extrachild: 1,
+    adultsprice: '',
+    noguestallowed: 1,
+    pricerange1: '',
+    pricerange2: '',
+    availablefrom: '',
+    avilableto: '',
+  },
   hotelId: '',
+  roomId: '',
 };
 
 export const hotelSlice = createSlice({
@@ -38,6 +81,16 @@ export const hotelSlice = createSlice({
         propertyName: action.payload.property_name,
         starRating: action.payload.rating.toString(),
       };
+      state.location = {
+        address: action.payload.address,
+        country: action.payload.country,
+        state: action.payload.state,
+        city: action.payload.state,
+        pincode: action.payload.pincode,
+        lng: '',
+        locality: '',
+        lat: '',
+      };
     },
     setProgressPercentage: (state, action) => {
       state.progressPercentage = action.payload;
@@ -51,12 +104,31 @@ export const hotelSlice = createSlice({
         starRating: '',
         email: '',
       };
+      state.location = {
+        address: '',
+        country: '',
+        state: '',
+        city: '',
+        pincode: '',
+        lng: '',
+        locality: '',
+        lat: '',
+      };
     },
     setHotelId: (state, action) => {
       state.hotelId = action.payload;
     },
     addBasicInfo: (state, action: PayloadAction<HotelCreationBasicInput>) => {
       state.basic = action.payload;
+    },
+    addLocationDetails: (state, action) => {
+      state.location = action.payload;
+    },
+    addRoomDetails: (state, action) => {
+      state.room = action.payload;
+    },
+    setRoomId: (state, action) => {
+      state.roomId = action.payload;
     },
   },
 });
@@ -67,4 +139,7 @@ export const {
   addBasicInfo,
   resetEditHotelData,
   setProgressPercentage,
+  addLocationDetails,
+  addRoomDetails,
+  setRoomId,
 } = hotelSlice.actions;

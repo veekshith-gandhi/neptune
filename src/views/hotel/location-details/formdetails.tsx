@@ -1,6 +1,5 @@
 import {
   Button,
-  Checkbox,
   Col,
   Form,
   Input,
@@ -12,13 +11,17 @@ import {
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import usePlacesAutocomplete from 'use-places-autocomplete';
+import {
+  addLocationDetails,
+  setProgressPercentage,
+} from '../../../features/hotel/hotel-slice';
 import { submitBasicLocationInfo } from '../../../services/hotel-api-service';
 import {
   getCountryInfo,
   getStateInfo,
 } from '../../../services/state-country-api-service';
+import { useAppSelector } from '../../../store';
 import { apiErrorParser } from '../../../utils/error-parser';
-import { addLocationHotelCreation } from '../redux/action';
 import {
   CountryEntity,
   HotelCreationLocationDetails,
@@ -37,14 +40,13 @@ const layout = {
 // { setOffice }: PlacesProps
 export const FormDetails: FunctionComponent<any> = () => {
   // console.log(setOffice);
-  let submitedId = '';
+  const { hotelId, location } = useAppSelector((state) => state.hotel);
   const [countryStore, setCountryStore] = useState<CountryEntity[]>([]);
   const [stateStore, setStateStore] = useState<StateEntity[]>([]);
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [api, contextHolder] = notification.useNotification();
   const dispatch = useDispatch();
   const { ready, value, setValue } = usePlacesAutocomplete();
-  const [isDissabled, setIsDissabled] = useState(true);
   const onFinish = async (e: HotelCreationLocationDetails) => {
     try {
       await submitBasicLocationInfo<any>(
@@ -55,16 +57,17 @@ export const FormDetails: FunctionComponent<any> = () => {
           city: e.city,
           state: e.state,
         },
-        submitedId
+        hotelId
       );
-      dispatch(addLocationHotelCreation(e));
+      dispatch(addLocationDetails(e));
+      dispatch(setProgressPercentage(40));
       api.success({ message: 'saved Success', placement: 'topRight' });
+      document
+        ?.getElementById('amenities-container-ref')
+        ?.scrollIntoView({ behavior: 'smooth' });
     } catch (error) {
       api.error({ message: apiErrorParser(error), placement: 'topRight' });
     }
-  };
-  const checkBoxChecking = (e: any) => {
-    e.target.checked ? setIsDissabled(false) : setIsDissabled(true);
   };
   useEffect(() => {
     async function fetchState() {
@@ -89,6 +92,28 @@ export const FormDetails: FunctionComponent<any> = () => {
       {...layout}
       layout="vertical"
       name="nest-messages"
+      fields={[
+        {
+          name: ['address'],
+          value: location?.address,
+        },
+        {
+          name: ['country'],
+          value: location?.country,
+        },
+        {
+          name: ['state'],
+          value: location?.state,
+        },
+        {
+          name: ['city'],
+          value: location?.city,
+        },
+        {
+          name: ['pincode'],
+          value: location?.pincode,
+        },
+      ]}
     >
       {contextHolder}
       <Form.Item label="Search Location">
@@ -118,7 +143,7 @@ export const FormDetails: FunctionComponent<any> = () => {
       <Form.Item
         name={['address']}
         label="Address"
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: 'Please fill your address' }]}
       >
         <Input type="name" allowClear />
       </Form.Item>
@@ -128,7 +153,7 @@ export const FormDetails: FunctionComponent<any> = () => {
             label="Country"
             hasFeedback
             name={['country']}
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: 'Please enter country' }]}
           >
             <Select
               showSearch
@@ -152,7 +177,7 @@ export const FormDetails: FunctionComponent<any> = () => {
           <Form.Item
             label="State"
             name={['state']}
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: 'Please enter state' }]}
           >
             <Select
               showSearch
@@ -175,7 +200,11 @@ export const FormDetails: FunctionComponent<any> = () => {
       </Row>
       <Row gutter={[8, 24]}>
         <Col span={8}>
-          <Form.Item label="City" name={['city']} rules={[{ required: true }]}>
+          <Form.Item
+            label="City"
+            name={['city']}
+            rules={[{ required: true, message: 'Please enter state' }]}
+          >
             <Input type="name" allowClear />
           </Form.Item>
         </Col>
@@ -183,24 +212,15 @@ export const FormDetails: FunctionComponent<any> = () => {
           <Form.Item
             label="Pincode"
             name={['pincode']}
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: 'Please enter pincode' }]}
           >
             <Input type="tel" allowClear />
           </Form.Item>
         </Col>
       </Row>
-      <Form.Item
-        name={['checked']}
-        rules={[{ required: true }]}
-        valuePropName="checked"
-      >
-        <Checkbox onChange={checkBoxChecking} value={'checked'}>
-          I agree to all your terms and condition
-        </Checkbox>
-      </Form.Item>
       <Form.Item>
         <Space>
-          <Button type="primary" disabled={isDissabled} htmlType="submit">
+          <Button type="primary" htmlType="submit">
             Save and Submit
           </Button>
         </Space>
