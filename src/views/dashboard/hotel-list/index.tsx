@@ -28,7 +28,7 @@ const HotelsList: FC = () => {
           ) : (
             <Fragment>
               {hotels.map((hotel) => (
-                <HotelListData key={hotel.id} {...hotel} />
+                <HotelListData key={hotel.id} data={hotel} />
               ))}
             </Fragment>
           )}

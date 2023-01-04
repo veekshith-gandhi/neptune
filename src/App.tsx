@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
-import { AddHotelComponent } from './containers/main-container/overview/add-hotel/container';
 import { Profile } from './containers/main-container/overview/profile';
 import { AuthLayout } from './containers/user';
 import { ForgotPassword } from './containers/user/container/forgot-password';
@@ -13,6 +12,7 @@ import { Verify } from './containers/user/container/verify';
 import MainLayout from './layouts/main-layout';
 import { Locations } from './routes';
 import { persistor, store } from './store';
+import { AddHotelComponent } from './views/add-hotel/container';
 import DashboardView from './views/dashboard';
 import NotFoundView from './views/not-found';
 

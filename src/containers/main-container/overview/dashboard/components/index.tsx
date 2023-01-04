@@ -10,7 +10,7 @@ import {
   deleteHotelInformation,
   getHotelInformation,
 } from '../../../../../services/hotel-api-service';
-import { addSubmitedIdToHotel } from '../../add-hotel/redux/action';
+import { addSubmitedIdToHotel } from '../../../../../views/add-hotel/redux/action';
 import { DashboardTableProps } from '../modal';
 
 export const DashboardTable: FunctionComponent<DashboardTableProps> = (

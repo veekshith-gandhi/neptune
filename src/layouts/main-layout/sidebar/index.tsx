@@ -1,6 +1,7 @@
 import {
   BuildOutlined,
   DashboardOutlined,
+  LogoutOutlined,
   ProfileOutlined,
 } from '@ant-design/icons';
 import { FunctionComponent } from 'react';
@@ -46,6 +47,15 @@ export const Sidebar: FunctionComponent = () => {
       >
         <ProfileOutlined className="mr-2" />
         Profile
+      </div>
+      <div
+        onClick={() => navigate(Locations.LOGIN)}
+        className={`sidebar_item ${
+          location.pathname === Locations.LOGIN ? 'sidebar_item_active' : ''
+        }`}
+      >
+        <LogoutOutlined className="mr-2" />
+        Logout
       </div>
     </div>
   );

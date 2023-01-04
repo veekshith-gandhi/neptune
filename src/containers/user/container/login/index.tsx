@@ -70,7 +70,7 @@ export const Login: FunctionComponent = () => {
         </div>
         <div className="login_input_box mb-3">
           <div className="login_label">
-            <I18 tkey="Username" />
+            <I18 tkey="Email" />
           </div>
           <div className="login_input_container position-relative">
             <input

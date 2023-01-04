@@ -83,7 +83,7 @@ export const Header: FunctionComponent = () => {
           <div className="user_details_box">
             <div className="user_name">{userDetails?.username || 'Admin'}</div>
             <div className="user_role">
-              <I18 tkey="Super Admin" />
+              <I18 tkey="Admin" />
             </div>
           </div>
         </div>

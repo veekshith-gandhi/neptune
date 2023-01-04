@@ -1,16 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AsyncThunkStates } from '../../@types';
 import { HotelEntity } from '../../@types/entity/hotel-entity';
-import { fetchHotels } from './async-thunks';
+import { deletHotel, fetchHotels } from './async-thunks';
 
 interface DashboardState {
   hotelsLoadingState: AsyncThunkStates;
   hotels: HotelEntity[];
+  //delete
+  hotelDeleteState: AsyncThunkStates;
 }
 
 const initialState: DashboardState = {
   hotelsLoadingState: 'idle',
   hotels: [],
+  hotelDeleteState: 'idle',
 };
 
 export const dashboardSlice = createSlice({
@@ -25,5 +28,17 @@ export const dashboardSlice = createSlice({
     builder.addCase(fetchHotels.pending, (state, action) => {
       state.hotelsLoadingState = action.meta.requestStatus;
     });
+    //delete
+    builder.addCase(deletHotel.fulfilled, (state, action) => {
+      state.hotelDeleteState = action.meta.requestStatus;
+      state.hotels = state.hotels.filter(
+        (hotel) => hotel.id !== action.payload
+      );
+    });
+    builder.addCase(deletHotel.pending, (state, action) => {
+      state.hotelDeleteState = action.meta.requestStatus;
+    });
   },
 });
+
+export const {} = dashboardSlice.actions;

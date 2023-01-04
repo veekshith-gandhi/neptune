@@ -18,10 +18,12 @@ import {
 } from 'antd';
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { HotelResponse } from '../../../../../@types/entity/hotel-entity';
-import { submitBasicHotelInfo } from '../../../../../services/hotel-api-service';
-import { useAppSelector } from '../../../../../store';
-import { apiErrorParser } from '../../../../../utils/error-parser';
+import { HotelResponse } from '../../../@types/entity/hotel-entity';
+import { addBasicInfo } from '../../../features/hotel/hotel-slice';
+
+import { submitBasicHotelInfo } from '../../../services/hotel-api-service';
+import { AppDispatch, useAppSelector } from '../../../store';
+import { apiErrorParser } from '../../../utils/error-parser';
 import {
   addBasicInfoToHotelCreation,
   addSubmitedIdToHotel,
@@ -36,12 +38,15 @@ const layout = {
 };
 
 export const Basicinfo: FunctionComponent = () => {
-  const { submitedId } = useAppSelector((state) => state.hotel);
+  const { hotels } = useAppSelector((state) => state.dashbaord);
+  const { basic } = useAppSelector((state) => state.hotel);
+
   const [api, contextHolder] = notification.useNotification();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [dateString, setDateString] = useState('');
   const [percent, setPercent] = useState(0);
   const onFinish = async (e: HotelCreationBasicInput) => {
+    let submitedId = '';
     e.date = dateString;
     setPercent(percent + 20);
     try {
@@ -55,6 +60,7 @@ export const Basicinfo: FunctionComponent = () => {
         },
         submitedId
       );
+      dispatch(addBasicInfo(e));
       dispatch(addBasicInfoToHotelCreation(e));
       dispatch(addSubmitedIdToHotel(data.id));
       api.success({ message: 'saved Success', placement: 'topRight' });
@@ -93,6 +99,20 @@ export const Basicinfo: FunctionComponent = () => {
         {...layout}
         style={{ padding: 24, minHeight: 360, background: 'aliceblue' }}
         layout="vertical"
+        fields={[
+          {
+            name: ['propertyName'],
+            value: basic.propertyName,
+          },
+          {
+            name: ['email'],
+            value: basic.email,
+          },
+          {
+            name: ['email'],
+            value: basic.email,
+          },
+        ]}
         onFinish={onFinish}
       >
         <Form.Item

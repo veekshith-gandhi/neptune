@@ -26,7 +26,7 @@ const HotelListTableHeader: FC = () => {
         <th>
           <I18 tkey="State" />
         </th>
-        <th colSpan={2}>
+        <th colSpan={2} style={{ textAlign: 'center' }}>
           <I18 tkey="Action" />
         </th>
       </tr>

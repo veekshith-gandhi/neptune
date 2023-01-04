@@ -21,8 +21,7 @@ import { useDispatch } from 'react-redux';
 import {
   submitHotelRoomInformation,
   submitHotelRoomPriceInformation,
-} from '../../../../../services/hotel-api-service';
-import { useAppSelector } from '../../../../../store';
+} from '../../../services/hotel-api-service';
 import {
   addHotelRoomsCreation,
   addHotelRoomsPriceCreation,
@@ -50,7 +49,8 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
   const [dateTo, setDateTo] = useState('');
 
   const dispatch = useDispatch();
-  const { submitedId, submitedRoomId } = useAppSelector((state) => state.hotel);
+  let submitedId = '';
+  let submitedRoomId = '';
   const onFinishRooms = async (e: HotelRoomsCreation) => {
     try {
       const { data } = await submitHotelRoomInformation<any>(

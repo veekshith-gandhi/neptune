@@ -12,13 +12,12 @@ import {
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import usePlacesAutocomplete from 'use-places-autocomplete';
-import { submitBasicLocationInfo } from '../../../../../services/hotel-api-service';
+import { submitBasicLocationInfo } from '../../../services/hotel-api-service';
 import {
   getCountryInfo,
   getStateInfo,
-} from '../../../../../services/state-country-api-service';
-import { useAppSelector } from '../../../../../store';
-import { apiErrorParser } from '../../../../../utils/error-parser';
+} from '../../../services/state-country-api-service';
+import { apiErrorParser } from '../../../utils/error-parser';
 import { addLocationHotelCreation } from '../redux/action';
 import {
   CountryEntity,
@@ -38,7 +37,7 @@ const layout = {
 // { setOffice }: PlacesProps
 export const FormDetails: FunctionComponent<any> = () => {
   // console.log(setOffice);
-  const { submitedId } = useAppSelector((state) => state.hotel);
+  let submitedId = '';
   const [countryStore, setCountryStore] = useState<CountryEntity[]>([]);
   const [stateStore, setStateStore] = useState<StateEntity[]>([]);
   const [selectedItem, setSelectedItem] = useState<string>('');

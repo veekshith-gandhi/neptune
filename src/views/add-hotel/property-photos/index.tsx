@@ -16,7 +16,7 @@ import type { UploadFile } from 'antd/es/upload/interface';
 const Panel = Collapse.Panel;
 
 import { FunctionComponent, useState } from 'react';
-import { uploadHotelImage } from '../../../../../services/hotel-api-service';
+import { uploadHotelImage } from '../../../services/hotel-api-service';
 
 const { Title } = Typography;
 const customPanelStyle = {
