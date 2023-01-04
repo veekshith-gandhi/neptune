@@ -35,7 +35,7 @@ const layout = {
 };
 
 export const Basicinfo: FunctionComponent = () => {
-  const { hotels } = useAppSelector((state) => state.dashbaord);
+  const { userDetails } = useAppSelector((state) => state.userReducer);
   const { basic } = useAppSelector((state) => state.hotel);
 
   const [api, contextHolder] = notification.useNotification();
@@ -113,7 +113,7 @@ export const Basicinfo: FunctionComponent = () => {
           },
           {
             name: ['email'],
-            value: basic.email,
+            value: userDetails?.email,
           },
         ]}
         onFinish={onFinish}
