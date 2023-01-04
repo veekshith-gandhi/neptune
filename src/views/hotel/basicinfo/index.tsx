@@ -19,7 +19,11 @@ import {
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { HotelResponse } from '../../../@types/entity/hotel-entity';
-import { addBasicInfo, setHotelId } from '../../../features/hotel/hotel-slice';
+import {
+  addBasicInfo,
+  setHotelId,
+  setProgressPercentage,
+} from '../../../features/hotel/hotel-slice';
 
 import { submitBasicHotelInfo } from '../../../services/hotel-api-service';
 import { AppDispatch, useAppSelector } from '../../../store';
@@ -35,14 +39,14 @@ const layout = {
 
 export const Basicinfo: FunctionComponent = () => {
   const { userDetails } = useAppSelector((state) => state.userReducer);
-  const { basic, hotelId } = useAppSelector((state) => state.hotel);
+  const { basic, hotelId, progressPercentage } = useAppSelector(
+    (state) => state.hotel
+  );
   const [api, contextHolder] = notification.useNotification();
   const dispatch = useDispatch<AppDispatch>();
   const [dateString, setDateString] = useState('');
-  const [percent, setPercent] = useState(0);
   const onFinish = async (e: HotelCreationBasicInput) => {
     e.date = dateString;
-    setPercent(20);
     try {
       const { data } = await submitBasicHotelInfo<HotelResponse>(
         {
@@ -56,6 +60,7 @@ export const Basicinfo: FunctionComponent = () => {
       );
       dispatch(addBasicInfo(e));
       dispatch(setHotelId(data.id));
+      dispatch(setProgressPercentage(20));
       document
         ?.getElementById('location-details-ref')
         ?.scrollIntoView({ behavior: 'smooth' });
@@ -77,7 +82,7 @@ export const Basicinfo: FunctionComponent = () => {
         </div>
         <div>
           <Progress
-            percent={percent}
+            percent={progressPercentage}
             status="active"
             strokeColor={{ from: '#108ee9', to: '#87d068' }}
           />
@@ -85,7 +90,7 @@ export const Basicinfo: FunctionComponent = () => {
             <Progress
               type="circle"
               width={50}
-              percent={percent}
+              percent={progressPercentage}
               strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
             />
           </Space>

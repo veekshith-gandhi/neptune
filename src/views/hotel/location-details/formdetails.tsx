@@ -41,7 +41,6 @@ export const FormDetails: FunctionComponent<any> = () => {
   const [countryStore, setCountryStore] = useState<CountryEntity[]>([]);
   const [stateStore, setStateStore] = useState<StateEntity[]>([]);
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [percent, setPercent] = useState(0);
   const [api, contextHolder] = notification.useNotification();
   const dispatch = useDispatch();
   const { ready, value, setValue } = usePlacesAutocomplete();
@@ -201,12 +200,7 @@ export const FormDetails: FunctionComponent<any> = () => {
       </Form.Item>
       <Form.Item>
         <Space>
-          <Button
-            type="primary"
-            onClick={() => setPercent(40)}
-            disabled={isDissabled}
-            htmlType="submit"
-          >
+          <Button type="primary" disabled={isDissabled} htmlType="submit">
             Save and Submit
           </Button>
         </Space>

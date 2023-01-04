@@ -8,11 +8,13 @@ interface AddHotelState {
   basic: HotelCreationBasicInput;
   editHotelData: HotelEntity | null;
   hotelId: string;
+  progressPercentage: number;
 }
 
 const initialState: AddHotelState = {
   addBasicInfoLoadingState: 'idle',
   editHotelData: null,
+  progressPercentage: 0,
   basic: {
     propertyName: '',
     starRating: '',
@@ -37,7 +39,11 @@ export const hotelSlice = createSlice({
         starRating: action.payload.rating.toString(),
       };
     },
+    setProgressPercentage: (state, action) => {
+      state.progressPercentage = action.payload;
+    },
     resetEditHotelData: (state, action) => {
+      state.progressPercentage = 0;
       state.basic = {
         contactNumber: '',
         date: '',
@@ -60,4 +66,5 @@ export const {
   setHotelId,
   addBasicInfo,
   resetEditHotelData,
+  setProgressPercentage,
 } = hotelSlice.actions;
