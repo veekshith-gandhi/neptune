@@ -5,7 +5,6 @@ export interface HotelCreationState {
   submitedId: string;
   rooms: HotelRoomsCreation;
   roomprice: HotelRoomPriceCreation;
-
   submitedRoomId: string;
 }
 export type HotelCreationBasicInput = {

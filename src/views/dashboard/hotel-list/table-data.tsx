@@ -5,7 +5,10 @@ import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HotelEntity } from '../../../@types/entity/hotel-entity';
 import { deletHotel } from '../../../features/dashboard/async-thunks';
-import { setEditHotelData } from '../../../features/hotel/hotel-slice';
+import {
+  setEditHotelData,
+  setHotelId,
+} from '../../../features/hotel/hotel-slice';
 import { Locations } from '../../../routes';
 import { useAppDispatch } from '../../../store';
 
@@ -42,6 +45,7 @@ const HotelListData: FC<HotelListDataProps> = ({ data }) => {
           type="primary"
           onClick={() => {
             dispatch(setEditHotelData(data));
+            dispatch(setHotelId(data.id));
             navigate(Locations.ADD_HOTEL);
           }}
         >

@@ -19,12 +19,11 @@ import {
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { HotelResponse } from '../../../@types/entity/hotel-entity';
-import { addBasicInfo } from '../../../features/hotel/hotel-slice';
+import { addBasicInfo, setHotelId } from '../../../features/hotel/hotel-slice';
 
 import { submitBasicHotelInfo } from '../../../services/hotel-api-service';
 import { AppDispatch, useAppSelector } from '../../../store';
 import { apiErrorParser } from '../../../utils/error-parser';
-import { addSubmitedIdToHotel } from '../redux/action';
 import type { HotelCreationBasicInput } from '../types';
 
 const { Title } = Typography;
@@ -36,14 +35,12 @@ const layout = {
 
 export const Basicinfo: FunctionComponent = () => {
   const { userDetails } = useAppSelector((state) => state.userReducer);
-  const { basic } = useAppSelector((state) => state.hotel);
-
+  const { basic, hotelId } = useAppSelector((state) => state.hotel);
   const [api, contextHolder] = notification.useNotification();
   const dispatch = useDispatch<AppDispatch>();
   const [dateString, setDateString] = useState('');
   const [percent, setPercent] = useState(0);
   const onFinish = async (e: HotelCreationBasicInput) => {
-    let submitedId = '';
     e.date = dateString;
     setPercent(percent + 20);
     try {
@@ -52,13 +49,13 @@ export const Basicinfo: FunctionComponent = () => {
           contact_number: e.contactNumber,
           email: e.email,
           rating: e.starRating,
-          taking_booking_since: e.date + '-02-02',
+          taking_booking_since: e.date,
           property_name: e.propertyName,
         },
-        submitedId
+        hotelId
       );
       dispatch(addBasicInfo(e));
-      dispatch(addSubmitedIdToHotel(data.id));
+      dispatch(setHotelId(data.id));
       document
         ?.getElementById('location-details-ref')
         ?.scrollIntoView({ behavior: 'smooth' });

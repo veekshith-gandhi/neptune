@@ -7,6 +7,7 @@ interface AddHotelState {
   addBasicInfoLoadingState: AsyncThunkStates;
   basic: HotelCreationBasicInput;
   editHotelData: HotelEntity | null;
+  hotelId: string;
 }
 
 const initialState: AddHotelState = {
@@ -19,6 +20,7 @@ const initialState: AddHotelState = {
     contactNumber: '',
     email: '',
   },
+  hotelId: '',
 };
 
 export const hotelSlice = createSlice({
@@ -35,10 +37,27 @@ export const hotelSlice = createSlice({
         starRating: action.payload.rating.toString(),
       };
     },
+    resetEditHotelData: (state, action) => {
+      state.basic = {
+        contactNumber: '',
+        date: '',
+        propertyName: '',
+        starRating: '',
+        email: '',
+      };
+    },
+    setHotelId: (state, action) => {
+      state.hotelId = action.payload;
+    },
     addBasicInfo: (state, action: PayloadAction<HotelCreationBasicInput>) => {
       state.basic = action.payload;
     },
   },
 });
 
-export const { setEditHotelData, addBasicInfo } = hotelSlice.actions;
+export const {
+  setEditHotelData,
+  setHotelId,
+  addBasicInfo,
+  resetEditHotelData,
+} = hotelSlice.actions;
