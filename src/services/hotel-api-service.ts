@@ -2,13 +2,19 @@ import {
   SubmitBasicHotelInfoDTO,
   SubmitHotelRoomInfoDTO,
 } from '../@types/dto/hotel-form-dto';
-import { FacilitiesEntity, HotelEntity } from '../@types/entity/hotel-entity';
+import {
+  FacilitiesEntity,
+  FacilityOption,
+  HotelEntity,
+} from '../@types/entity/hotel-entity';
 import {
   Facilities,
+  FacilityOptionsByID,
   FinanceLegal,
   HotelEndPoint,
   HotelImageEndPoint,
   HotelRoomsEndPoint,
+  SelectFacilityOptions,
 } from '../constants/api-endpoints';
 import BaseApiService from './base-api-service';
 
@@ -72,6 +78,19 @@ class HotelFormApiService extends BaseApiService {
   getHotels = () => {
     return this.axiosInstance.get<HotelEntity[]>(HotelEndPoint);
   };
+
+  getFacilityOptionsByID = (id: string, hotelId?: string) => {
+    return this.axiosInstance.get<FacilityOption[]>(
+      FacilityOptionsByID(id) + `&hotel=${hotelId}&type=HOTEL`
+    );
+  };
+
+  selectFacilityOptions = (hotelId: string, optionId: string) => {
+    return this.axiosInstance.post(SelectFacilityOptions, {
+      hotel: hotelId,
+      facility: optionId,
+    });
+  };
 }
 export const {
   submitBasicHotelInfo,
@@ -84,4 +103,6 @@ export const {
   submitFinanceLegalInformation,
   fetchFacilitiesList,
   getHotels,
+  getFacilityOptionsByID,
+  selectFacilityOptions,
 } = new HotelFormApiService();

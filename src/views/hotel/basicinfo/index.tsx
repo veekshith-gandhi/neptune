@@ -18,9 +18,10 @@ import {
 } from 'antd';
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { HotelResponse } from '../../../@types/entity/hotel-entity';
+import { HotelEntity } from '../../../@types/entity/hotel-entity';
 import {
   addBasicInfo,
+  setEditHotelData,
   setHotelId,
   setProgressPercentage,
 } from '../../../features/hotel/hotel-slice';
@@ -48,7 +49,7 @@ export const Basicinfo: FunctionComponent = () => {
   const onFinish = async (e: HotelCreationBasicInput) => {
     e.date = dateString;
     try {
-      const { data } = await submitBasicHotelInfo<HotelResponse>(
+      const { data } = await submitBasicHotelInfo<HotelEntity>(
         {
           contact_number: e.contactNumber,
           email: e.email,
@@ -59,6 +60,7 @@ export const Basicinfo: FunctionComponent = () => {
         hotelId
       );
       dispatch(addBasicInfo(e));
+      dispatch(setEditHotelData(data));
       dispatch(setHotelId(data.id));
       dispatch(setProgressPercentage(10));
       document

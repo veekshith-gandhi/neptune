@@ -6,18 +6,6 @@ import './header.scss';
 export const Header: FunctionComponent = () => {
   const { userDetails } = useAuthState();
 
-  // const logout = (): void => {
-  //   const { confirm } = Modal;
-  //   confirm({
-  //     content: <strong> Are you sure you want to logout?</strong>,
-  //     onOk() {
-  //       console.warn('To be implemented');
-  //     },
-  //     okText: i18Get('Logout', config.lang),
-  //     cancelText: i18Get('Cancel', config.lang),
-  //   });
-  // };
-
   return (
     <div
       className="custom_header_container"

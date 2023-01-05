@@ -4,13 +4,29 @@ import {
   LogoutOutlined,
   ProfileOutlined,
 } from '@ant-design/icons';
+import { Modal } from 'antd';
 import { FunctionComponent } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Locations } from '../../../routes';
 import './sidebar.scss';
 
 export const Sidebar: FunctionComponent = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logout = (): void => {
+    const { confirm } = Modal;
+    confirm({
+      content: <strong> Are you sure you want to logout?</strong>,
+      onOk() {
+        dispatch({ type: 'LOGOUT' });
+        navigate(Locations.LOGIN);
+      },
+      okText: 'Logout',
+      cancelText: 'Cancel',
+    });
+  };
 
   return (
     <div
@@ -49,7 +65,7 @@ export const Sidebar: FunctionComponent = () => {
         Profile
       </div>
       <div
-        onClick={() => navigate(Locations.LOGIN)}
+        onClick={logout}
         className={`sidebar_item ${
           location.pathname === Locations.LOGIN ? 'sidebar_item_active' : ''
         }`}

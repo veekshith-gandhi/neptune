@@ -106,6 +106,7 @@ export const hotelSlice = createSlice({
       state.progressPercentage = action.payload;
     },
     resetEditHotelData: (state, action) => {
+      state.editHotelData = null;
       state.progressPercentage = 0;
       state.basic = {
         contactNumber: '',

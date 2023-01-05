@@ -118,6 +118,9 @@ const reducer = (state = initialState, action: Action) => {
         resetPasswordCompleted: null,
       };
 
+    case Events.LOGOUT:
+      return initialState;
+
     default:
       return state;
   }

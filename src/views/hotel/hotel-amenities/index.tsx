@@ -1,6 +1,6 @@
 import { Button, Card, Space, Typography } from 'antd';
 import Progress from 'antd/es/progress';
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchFacilites } from '../../../features/hotel/async-thunk';
 import { AppDispatch, useAppSelector } from '../../../store';
@@ -16,9 +16,13 @@ export const FacilitiesDetails: FunctionComponent = () => {
     hotelFacilitiesLoadingState,
   } = useAppSelector((state) => state.hotel);
   const dispatch = useDispatch<AppDispatch>();
+
+  const [selectedAmenity, setSelectedAmenity] = useState('');
+
   useEffect(() => {
     dispatch(fetchFacilites('HOTEL'));
   }, []);
+
   return (
     <Card
       style={{ margin: '5px 50px', maxHeight: 480 }}
@@ -46,16 +50,25 @@ export const FacilitiesDetails: FunctionComponent = () => {
         </div>
       </div>
       <div className="amenities-main-container">
-        <Card title="Hotel Amenities" style={{ width: 250 }}>
+        <div className="p-2 card" style={{ width: 250 }}>
+          <strong className="border-bottom p-2 mb-2">Hotel Amenities</strong>
           <div className="amenities-list-container">
-            {hotelFacilitiesList?.map((hotel) => (
-              <Button style={{ border: 'none' }} key={hotel.id}>
-                {hotel.name}
+            {hotelFacilitiesList?.map((facility) => (
+              <Button
+                disabled={selectedAmenity === facility.id}
+                onClick={() => setSelectedAmenity(facility.id!)}
+                style={{ border: 'none' }}
+                className="w-100 border-bottom px-2 text-left"
+                key={facility.id}
+              >
+                {facility.name}
               </Button>
             ))}
           </div>
-        </Card>
-        <FacilitesOptions />
+        </div>
+        {selectedAmenity ? (
+          <FacilitesOptions amenityID={selectedAmenity} />
+        ) : null}
       </div>
     </Card>
   );
