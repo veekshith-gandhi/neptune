@@ -44,3 +44,11 @@ export interface Completion {
   photos: boolean;
   finance_legal: boolean;
 }
+export interface FacilitiesEntity {
+  id?: string;
+  name?: string;
+  type: string;
+  description?: string;
+  created_at?: string;
+  updated_at?: string;
+}

@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { Basicinfo } from '../basicinfo';
-import { FacilitiesDetails } from '../facilities';
 import { FinanceDetails } from '../finance';
+import { FacilitiesDetails } from '../hotel-amenities';
 import { LocationDetails } from '../location-details';
 import { PropertyPhotos } from '../property-photos';
 import { RoomsAndSpacesDetails } from '../rooms-spaces';

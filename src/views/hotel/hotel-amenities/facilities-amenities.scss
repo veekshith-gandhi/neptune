@@ -1,0 +1,35 @@
+.amenities-main-container {
+  display: flex;
+  .amenities-list-container {
+    height: 250px;
+    overflow: hidden;
+    overflow-y: auto;
+    p {
+      text-align: left;
+      box-shadow: 0px -2px 0px 0px #888888;
+      margin-bottom: 3px;
+    }
+  }
+  .amenities-child-container {
+    height: 250px;
+    overflow-y: auto;
+  }
+}
+.amenities-list-container {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.amenities-child-container {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.amenities-list-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.amenities-child-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.amenities-list-container p:hover {
+  color: rgb(158, 141, 141);
+  cursor: pointer;
+}

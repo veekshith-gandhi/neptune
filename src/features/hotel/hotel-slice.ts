@@ -1,12 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AsyncThunkStates } from '../../@types';
-import { HotelEntity } from '../../@types/entity/hotel-entity';
+import {
+  FacilitiesEntity,
+  HotelEntity,
+} from '../../@types/entity/hotel-entity';
 import {
   HotelCreationBasicInput,
   HotelCreationLocationDetails,
   HotelRoomPriceCreation,
   HotelRoomsCreation,
 } from '../../views/hotel/types';
+import { fetchFacilites } from './async-thunk';
 
 interface AddHotelState {
   addBasicInfoLoadingState: AsyncThunkStates;
@@ -19,10 +23,13 @@ interface AddHotelState {
   location: HotelCreationLocationDetails;
   room: HotelRoomsCreation;
   roomprice: HotelRoomPriceCreation;
+  hotelFacilitiesLoadingState: AsyncThunkStates;
+  hotelFacilitiesList: FacilitiesEntity[] | undefined;
 }
 
 const initialState: AddHotelState = {
   addBasicInfoLoadingState: 'idle',
+  hotelFacilitiesLoadingState: 'idle',
   editHotelData: null,
   progressPercentage: 0,
   basic: {
@@ -68,6 +75,7 @@ const initialState: AddHotelState = {
   hotelId: '',
   roomId: '',
   financeLegalId: '',
+  hotelFacilitiesList: [],
 };
 
 export const hotelSlice = createSlice({
@@ -142,6 +150,15 @@ export const hotelSlice = createSlice({
     setFinanceLegalId: (state, action) => {
       state.financeLegalId = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchFacilites.fulfilled, (state, action) => {
+      (state.hotelFacilitiesLoadingState = action.meta.requestStatus),
+        (state.hotelFacilitiesList = action.payload);
+    }),
+      builder.addCase(fetchFacilites.pending, (state, action) => {
+        state.hotelFacilitiesLoadingState = action.meta.requestStatus;
+      });
   },
 });
 

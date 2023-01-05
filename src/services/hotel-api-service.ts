@@ -2,8 +2,9 @@ import {
   SubmitBasicHotelInfoDTO,
   SubmitHotelRoomInfoDTO,
 } from '../@types/dto/hotel-form-dto';
-import { HotelEntity } from '../@types/entity/hotel-entity';
+import { FacilitiesEntity, HotelEntity } from '../@types/entity/hotel-entity';
 import {
+  Facilities,
   FinanceLegal,
   HotelEndPoint,
   HotelImageEndPoint,
@@ -60,7 +61,11 @@ class HotelFormApiService extends BaseApiService {
     }
     return this.axiosInstance.post(FinanceLegal, fd);
   };
-
+  fetchFacilitiesList = (payload: string) => {
+    return this.axiosInstance.get<FacilitiesEntity[]>(
+      Facilities + `${payload}`
+    );
+  };
   /**
    *
    */
@@ -77,5 +82,6 @@ export const {
   submitHotelRoomInformation,
   submitHotelRoomPriceInformation,
   submitFinanceLegalInformation,
+  fetchFacilitiesList,
   getHotels,
 } = new HotelFormApiService();
