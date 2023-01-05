@@ -6,6 +6,8 @@ import {
   Collapse,
   Form,
   Input,
+  message,
+  notification,
   Progress,
   Select,
   Space,
@@ -13,10 +15,15 @@ import {
   Upload,
   UploadProps,
 } from 'antd';
-import ImgCrop from 'antd-img-crop';
-import type { UploadFile } from 'antd/es/upload/interface';
-import { RcFile } from 'antd/lib/upload';
 import { FunctionComponent, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+  setFinanceLegalId,
+  setProgressPercentage,
+} from '../../../features/hotel/hotel-slice';
+import { submitFinanceLegalInformation } from '../../../services/hotel-api-service';
+import { useAppSelector } from '../../../store';
+import { apiErrorParser } from '../../../utils/error-parser';
 const Panel = Collapse.Panel;
 const { Option } = Select;
 const { Title } = Typography;
@@ -32,56 +39,60 @@ const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 12 },
 };
-
 const props: UploadProps = {
-  beforeUpload: (file) => {
+  beforeUpload: (file, fileList) => {
     const isPNG = file.type === 'image/png';
     if (!isPNG) {
-      // message.error(`${file.name} is not a png file`);
+      message.error(`${file.name} is not a png file`);
     }
-    return isPNG || Upload.LIST_IGNORE;
+    return false;
   },
-  // onChange: info => {
-  // 	console.log(info.fileList);
-  // }
 };
 
 export const FinanceDetails: FunctionComponent = () => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
   const [isDissabled, setIsDissabled] = useState(true);
-
+  const { hotelId, financeLegalId } = useAppSelector((state) => state.hotel);
+  const dispatch = useDispatch();
+  const [api, contextHolder] = notification.useNotification();
   const checkBoxChecking = (e: any) => {
     e.target.checked ? setIsDissabled(false) : setIsDissabled(true);
   };
 
-  const onPreview = async (file: UploadFile) => {
-    let src = file.url as string;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj as RcFile);
-        reader.onload = () => resolve(reader.result as string);
+  const onFinish = async (e: any) => {
+    if (!hotelId) {
+      return api.error({
+        message: 'Fill from the Top',
+        placement: 'topRight',
       });
     }
-    const image = new Image();
-    image.src = src;
-    // 	console.log(image);
-    // console.log(src);
-
-    // 	const imgWindow = window.open(src);
-    // 	imgWindow?.document.write(image.outerHTML);
-  };
-  // const checkForAccountNumber = (e:any) => {
-
-  // 	console.log(e);
-
-  // };
-  const onFinish = (e: any) => {
-    e.propertyimage = fileList;
-    // console.log(e);
+    console.log(e.panimage.fileList[0].originFileObj);
+    const formData = new FormData();
+    formData.append('pan_doc', e?.panimage?.fileList[0]?.originFileObj);
+    formData.append(
+      'property_info',
+      e?.propertyimage?.fileList[0]?.originFileObj
+    );
+    formData.append('account_number', e.acountnumber);
+    formData.append('bank_nmae', e.bankname);
+    formData.append('account_holder_name', e.cardholdername);
+    formData.append('ifsc', e.ifsccode);
+    formData.append('pan_holder_name', e.panholdername);
+    formData.append('pan_holder_dob', e.dateofbirth);
+    formData.append('gst_number', e.gstnumber);
+    formData.append('bank_nmae', e.bankname);
+    formData.append('hotel', hotelId ? hotelId : '');
+    console.log('id', financeLegalId);
+    try {
+      const { data } = await submitFinanceLegalInformation(
+        formData,
+        financeLegalId
+      );
+      dispatch(setFinanceLegalId(data.id));
+      dispatch(setProgressPercentage(100));
+      api.success({ message: 'saved Success', placement: 'topRight' });
+    } catch (error) {
+      api.error({ message: apiErrorParser(error), placement: 'topRight' });
+    }
   };
 
   return (
@@ -110,6 +121,7 @@ export const FinanceDetails: FunctionComponent = () => {
           </Space>
         </div>
       </div>
+      {contextHolder}
       <Form
         style={{ padding: 24, minHeight: 360 }}
         {...layout}
@@ -126,6 +138,18 @@ export const FinanceDetails: FunctionComponent = () => {
         >
           <Panel header="Bank Details" key="1" style={customPanelStyle}>
             <div style={{ padding: 24, background: 'aliceblue' }}>
+              <Form.Item
+                label="Name"
+                name={['cardholdername']}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please fill your Name!',
+                  },
+                ]}
+              >
+                <Input name="cardholdername" required type="name" />
+              </Form.Item>
               <Form.Item
                 label="Account Number"
                 name={['acountnumber']}
@@ -148,7 +172,7 @@ export const FinanceDetails: FunctionComponent = () => {
               <Space>
                 <Form.Item
                   label="IFSC Code"
-                  name={['state']}
+                  name={['ifsccode']}
                   rules={[
                     {
                       required: true,
@@ -157,20 +181,19 @@ export const FinanceDetails: FunctionComponent = () => {
                     },
                   ]}
                 >
-                  <Input allowClear maxLength={11} required />
+                  <Input allowClear maxLength={11} name="ifsccode" required />
                 </Form.Item>
                 <Form.Item
                   label="Bank Name"
                   style={{ width: '300px' }}
                   hasFeedback
-                  name="starRating"
+                  name="bankname"
                 >
                   <Select placeholder="select Number" allowClear>
-                    <Option value="1">1</Option>
-                    <Option value="2">2</Option>
-                    <Option value="3">3</Option>
-                    <Option value="4">4</Option>
-                    <Option value="5">5</Option>
+                    <Option value="1">HDFC</Option>
+                    <Option value="2">Canara</Option>
+                    <Option value="3">SBI</Option>
+                    <Option value="4">HSBC</Option>
                   </Select>
                 </Form.Item>
               </Space>
@@ -180,15 +203,15 @@ export const FinanceDetails: FunctionComponent = () => {
             <div style={{ padding: 24, background: 'aliceblue' }}>
               <Form.Item
                 label="Name"
-                name={['name']}
+                name={['panholdername']}
                 rules={[{ required: true }]}
               >
-                <Input type="name" allowClear required />
+                <Input type="name" name="panholdername" allowClear required />
               </Form.Item>
 
               <Form.Item
                 label="Pan Card"
-                name={['pancard']}
+                name={['pancardnumber']}
                 rules={[
                   {
                     required: true,
@@ -197,18 +220,18 @@ export const FinanceDetails: FunctionComponent = () => {
                   },
                 ]}
               >
-                <Input allowClear name="pancard" maxLength={10} />
+                <Input allowClear name="pancardnumber" maxLength={10} />
               </Form.Item>
               <Form.Item
                 label="DOB"
-                name={['date']}
+                name={['dateofbirth']}
                 rules={[{ required: true }]}
               >
-                <Input name="date" allowClear type="date" required />
+                <Input name="dateofbirth" allowClear type="date" required />
               </Form.Item>
               <Form.Item name={['panimage']} rules={[{ required: true }]}>
-                <Upload maxCount={1} {...props}>
-                  <Button icon={<UploadOutlined />}>Upload png only</Button>
+                <Upload maxCount={1} name="panimage" {...props}>
+                  <Button icon={<UploadOutlined />}>Upload</Button>
                 </Upload>
               </Form.Item>
             </div>
@@ -216,25 +239,24 @@ export const FinanceDetails: FunctionComponent = () => {
           <Panel header="Property Info" key="3" style={customPanelStyle}>
             <div style={{ padding: 24, background: 'aliceblue' }}>
               <Form.Item label="upload images" name={['propertyimage']}>
-                <ImgCrop rotate>
-                  <Upload
-                    listType="picture-card"
-                    name="propertyimage"
-                    fileList={fileList}
-                    onPreview={onPreview}
-                    onChange={onChange}
-                  >
-                    {fileList.length < 5 && '+ Upload'}
-                  </Upload>
-                </ImgCrop>
+                <Upload
+                  maxCount={1}
+                  listType="picture-card"
+                  name="propertyimage"
+                  beforeUpload={(file) => {
+                    return false;
+                  }}
+                >
+                  {'+ Upload'}
+                </Upload>
               </Form.Item>
             </div>
           </Panel>
-          <Panel header="Property Info" key="4" style={customPanelStyle}>
+          <Panel header="GST Details" key="4" style={customPanelStyle}>
             <div style={{ padding: 24, background: 'aliceblue' }}>
               <Form.Item
-                label="GST Details"
-                name={['gstdetails']}
+                label="GST number"
+                name={['gstnumber']}
                 rules={[
                   {
                     required: true,
@@ -245,7 +267,7 @@ export const FinanceDetails: FunctionComponent = () => {
                   },
                 ]}
               >
-                <Input allowClear name="gstdetails" maxLength={15} />
+                <Input allowClear name="gstnumber" maxLength={15} />
               </Form.Item>
             </div>
           </Panel>

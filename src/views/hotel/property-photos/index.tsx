@@ -40,11 +40,13 @@ export const PropertyPhotos: FunctionComponent = () => {
     setFileList(newFileList);
   };
   const onFinish = async (e: any) => {
+    console.log(e);
     const { file } = e.singlepropertyimage;
 
     const formData = new FormData();
     formData.append('file', file.originFileObj);
     formData.append('hotel', '922527ab-0be7-4751-a5a1-13bd2c7fa29d');
+    console.log(formData);
     await uploadHotelImage(formData);
     setFileList([]);
     // setFileListTwo([]);

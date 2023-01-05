@@ -60,7 +60,7 @@ export const FormDetails: FunctionComponent<any> = () => {
         hotelId
       );
       dispatch(addLocationDetails(e));
-      dispatch(setProgressPercentage(20));
+      dispatch(setProgressPercentage(10));
       api.success({ message: 'saved Success', placement: 'topRight' });
       document
         ?.getElementById('amenities-container-ref')

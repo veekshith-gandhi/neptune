@@ -12,6 +12,7 @@ interface AddHotelState {
   addBasicInfoLoadingState: AsyncThunkStates;
   hotelId: string;
   roomId: string;
+  financeLegalId: string;
   basic: HotelCreationBasicInput;
   editHotelData: HotelEntity | null;
   progressPercentage: number;
@@ -66,6 +67,7 @@ const initialState: AddHotelState = {
   },
   hotelId: '',
   roomId: '',
+  financeLegalId: '',
 };
 
 export const hotelSlice = createSlice({
@@ -114,6 +116,10 @@ export const hotelSlice = createSlice({
         locality: '',
         lat: '',
       };
+
+      state.hotelId = '';
+      state.roomId = '';
+      state.financeLegalId = '';
     },
     setHotelId: (state, action) => {
       state.hotelId = action.payload;
@@ -133,6 +139,9 @@ export const hotelSlice = createSlice({
     setRoomId: (state, action) => {
       state.roomId = action.payload;
     },
+    setFinanceLegalId: (state, action) => {
+      state.financeLegalId = action.payload;
+    },
   },
 });
 
@@ -145,5 +154,6 @@ export const {
   addLocationDetails,
   addRoomDetails,
   setRoomId,
+  setFinanceLegalId,
   addRoomPrice,
 } = hotelSlice.actions;

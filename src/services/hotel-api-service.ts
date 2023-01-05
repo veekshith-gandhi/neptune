@@ -4,6 +4,7 @@ import {
 } from '../@types/dto/hotel-form-dto';
 import { HotelEntity } from '../@types/entity/hotel-entity';
 import {
+  FinanceLegal,
   HotelEndPoint,
   HotelImageEndPoint,
   HotelRoomsEndPoint,
@@ -53,6 +54,12 @@ class HotelFormApiService extends BaseApiService {
     }
     return this.axiosInstance.patch<T>(HotelRoomsEndPoint + `${id}/`, payload);
   };
+  submitFinanceLegalInformation = (fd: FormData, id: string) => {
+    if (id) {
+      return this.axiosInstance.patch(FinanceLegal + `${id}/`, fd);
+    }
+    return this.axiosInstance.post(FinanceLegal, fd);
+  };
 
   /**
    *
@@ -69,5 +76,6 @@ export const {
   deleteHotelInformation,
   submitHotelRoomInformation,
   submitHotelRoomPriceInformation,
+  submitFinanceLegalInformation,
   getHotels,
 } = new HotelFormApiService();
