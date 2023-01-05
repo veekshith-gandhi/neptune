@@ -70,7 +70,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
       );
       dispatch(addRoomDetails(e));
       dispatch(setRoomId(data.id));
-      dispatch(setProgressPercentage(10));
+      dispatch(setProgressPercentage(40));
       api.success({ message: 'saved Success', placement: 'topRight' });
     } catch (error) {
       api.error({ message: 'error', placement: 'topRight' });
@@ -97,7 +97,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
       );
       dispatch(addRoomPrice(e));
       dispatch(setRoomId(data.id));
-      dispatch(setProgressPercentage(10));
+      dispatch(setProgressPercentage(50));
       document
         ?.getElementById('property-photos-ref')
         ?.scrollIntoView({ behavior: 'smooth' });
