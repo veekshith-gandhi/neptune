@@ -77,7 +77,10 @@ export const Basicinfo: FunctionComponent = () => {
   return (
     <Card style={{ margin: '5px 50px' }}>
       {contextHolder}
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        id="basic-info-ref"
+        style={{ display: 'flex', justifyContent: 'space-between' }}
+      >
         <div>
           <Title level={4}>Welcome to Ingo-MMT</Title>
           <p>Please fill in basic details of your property</p>

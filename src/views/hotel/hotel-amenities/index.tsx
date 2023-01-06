@@ -1,8 +1,9 @@
-import { Button, Card, Space, Typography } from 'antd';
+import { Button, Card, notification, Space, Typography } from 'antd';
 import Progress from 'antd/es/progress';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchFacilites } from '../../../features/hotel/async-thunk';
+import { setProgressPercentage } from '../../../features/hotel/hotel-slice';
 import { AppDispatch, useAppSelector } from '../../../store';
 import './facilities-amenities.scss';
 import { FacilitesOptions } from './facilities-options';
@@ -18,6 +19,7 @@ export const FacilitiesDetails: FunctionComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedAmenity, setSelectedAmenity] = useState('');
+  const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
     dispatch(fetchFacilites('HOTEL'));
@@ -25,10 +27,11 @@ export const FacilitiesDetails: FunctionComponent = () => {
 
   return (
     <Card
-      style={{ margin: '5px 50px', maxHeight: 480 }}
+      style={{ margin: '5px 50px', maxHeight: 530 }}
       id="amenities-container-ref"
     >
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        {contextHolder}
         <div>
           <Title level={4}>Facilites</Title>
           <p>Please select general facilities available at your property</p>
@@ -70,6 +73,22 @@ export const FacilitiesDetails: FunctionComponent = () => {
           <FacilitesOptions amenityID={selectedAmenity} />
         ) : null}
       </div>
+      <Space>
+        <Button
+          onClick={() => {
+            api.success({ message: 'saved Success', placement: 'topRight' });
+            dispatch(setProgressPercentage(25));
+            document
+              ?.getElementById('rooms-spaces-ref')
+              ?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          style={{ marginTop: 20 }}
+          type="primary"
+          htmlType="submit"
+        >
+          Save and Submit
+        </Button>
+      </Space>
     </Card>
   );
 };

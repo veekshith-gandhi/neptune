@@ -27,7 +27,7 @@ export const TabNavigationBar: FunctionComponent = () => {
 };
 
 const tabList = [
-  { tab: 'Basic info', key: 'tab1' },
+  { tab: 'Basic info', key: 'tab1', id: 'basic-info-ref' },
   { tab: 'Location', key: 'tab2', id: 'location-details-ref' },
   { tab: 'Amenities', key: 'tab3', id: 'amenities-container-ref' },
   { tab: 'Rooms', key: 'tab4', id: 'rooms-spaces-ref' },

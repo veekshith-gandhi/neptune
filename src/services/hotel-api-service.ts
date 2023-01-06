@@ -14,6 +14,7 @@ import {
   HotelEndPoint,
   HotelImageEndPoint,
   HotelRoomsEndPoint,
+  SelectFacilitiesRemoveOption,
   SelectFacilityOptions,
 } from '../constants/api-endpoints';
 import BaseApiService from './base-api-service';
@@ -67,28 +68,36 @@ class HotelFormApiService extends BaseApiService {
     }
     return this.axiosInstance.post(FinanceLegal, fd);
   };
-  fetchFacilitiesList = (payload: string) => {
-    return this.axiosInstance.get<FacilitiesEntity[]>(
-      Facilities + `${payload}`
-    );
-  };
   /**
    *
    */
   getHotels = () => {
     return this.axiosInstance.get<HotelEntity[]>(HotelEndPoint);
   };
-
+  /**
+   * Amenities
+   */
+  fetchFacilitiesList = (payload: string) => {
+    return this.axiosInstance.get<FacilitiesEntity[]>(
+      Facilities + `${payload}`
+    );
+  };
   getFacilityOptionsByID = (id: string, hotelId?: string) => {
     return this.axiosInstance.get<FacilityOption[]>(
       FacilityOptionsByID(id) + `&hotel=${hotelId}&type=HOTEL`
     );
   };
 
-  selectFacilityOptions = (hotelId: string, optionId: string) => {
+  checkFacilityOptions = (hotelId: string, optionId: string) => {
     return this.axiosInstance.post(SelectFacilityOptions, {
       hotel: hotelId,
-      facility: optionId,
+      options: optionId,
+    });
+  };
+  uncheckFacilityOption = (hotelId: string, optionId: string) => {
+    return this.axiosInstance.post(SelectFacilitiesRemoveOption, {
+      hotel: hotelId,
+      options: optionId,
     });
   };
 }
@@ -104,5 +113,6 @@ export const {
   fetchFacilitiesList,
   getHotels,
   getFacilityOptionsByID,
-  selectFacilityOptions,
+  checkFacilityOptions,
+  uncheckFacilityOption,
 } = new HotelFormApiService();

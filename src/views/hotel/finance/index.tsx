@@ -90,6 +90,9 @@ export const FinanceDetails: FunctionComponent = () => {
       dispatch(setFinanceLegalId(data.id));
       dispatch(setProgressPercentage(100));
       api.success({ message: 'saved Success', placement: 'topRight' });
+      document
+        ?.getElementById('basic-info-ref')
+        ?.scrollIntoView({ behavior: 'smooth' });
     } catch (error) {
       api.error({ message: apiErrorParser(error), placement: 'topRight' });
     }
