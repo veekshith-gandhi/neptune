@@ -33,7 +33,7 @@ interface AddHotelState {
   roomFacilitiesLoadingState: AsyncThunkStates;
   hotelFacilitiesList: FacilitiesEntity[] | undefined;
   roomFacilitiesList: FacilitiesEntity[] | undefined;
-  roomList: RoomList[] | undefined;
+  roomList: RoomList[];
   roomListLoadingState: AsyncThunkStates;
 }
 
@@ -190,7 +190,9 @@ export const hotelSlice = createSlice({
       });
     builder.addCase(deletRoomList.fulfilled, (state, action) => {
       (state.roomListLoadingState = action.meta.requestStatus),
-        (state.roomList = action.payload);
+        (state.roomList = state.roomList?.filter(
+          (room) => room.id !== action.payload
+        ));
     }),
       builder.addCase(deletRoomList.pending, (state, action) => {
         state.roomListLoadingState = action.meta.requestStatus;

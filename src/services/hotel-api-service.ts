@@ -123,7 +123,7 @@ class HotelFormApiService extends BaseApiService {
     return this.axiosInstance.get(RoomListByHotelId + `${hotelId}`);
   };
   deletRoomInformation = (roomId: string) => {
-    return this.axiosInstance.delete(DeleteRoom + `${roomId}`);
+    return this.axiosInstance.delete(DeleteRoom + `${roomId}/`);
   };
 }
 export const {
@@ -144,4 +144,5 @@ export const {
   checkAminitieOptions,
   uncheckAminitieOption,
   fetchListofRoomsCreated,
+  deletRoomInformation,
 } = new HotelFormApiService();

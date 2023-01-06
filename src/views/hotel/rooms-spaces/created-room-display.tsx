@@ -2,7 +2,10 @@ import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Collapse, Popconfirm, Row } from 'antd';
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchRoomList } from '../../../features/hotel/async-thunk';
+import {
+  deletRoomList,
+  fetchRoomList,
+} from '../../../features/hotel/async-thunk';
 import { AppDispatch, useAppSelector } from '../../../store';
 
 const layout = {
@@ -26,6 +29,7 @@ export const CreatedRoomDisplay: FC = () => {
     }
   }, [hotelId]);
 
+  if (roomList.length == 0) return <p></p>;
   return (
     <Collapse
       style={{ padding: '0px 25px 0 25px', background: '#FFFFFF' }}
@@ -45,7 +49,12 @@ export const CreatedRoomDisplay: FC = () => {
               <Card
                 title={room.room_name}
                 extra={
-                  <Popconfirm title="Delete the room">
+                  <Popconfirm
+                    onConfirm={() => {
+                      dispatch(deletRoomList(room.id));
+                    }}
+                    title="Delete the room"
+                  >
                     <Button>
                       <DeleteOutlined />
                     </Button>
