@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  deleteHotelInformation,
   fetchFacilitiesList,
   fetchListofRoomsCreated,
 } from '../../services/hotel-api-service';
@@ -37,6 +38,17 @@ export const fetchRoomList = createAsyncThunk(
       const { data } = await fetchListofRoomsCreated(payload);
       // console.log(data);
       return data;
+    } catch (error) {
+      return [];
+    }
+  }
+);
+export const deletRoomList = createAsyncThunk(
+  '/deletRoomList',
+  async (payload: string) => {
+    try {
+      await deleteHotelInformation(payload);
+      return;
     } catch (error) {
       return [];
     }

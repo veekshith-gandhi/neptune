@@ -8,6 +8,7 @@ import {
   HotelEntity,
 } from '../@types/entity/hotel-entity';
 import {
+  DeleteRoom,
   Facilities,
   FacilityOptionsByID,
   FinanceLegal,
@@ -120,6 +121,9 @@ class HotelFormApiService extends BaseApiService {
   };
   fetchListofRoomsCreated = (hotelId: string) => {
     return this.axiosInstance.get(RoomListByHotelId + `${hotelId}`);
+  };
+  deletRoomInformation = (roomId: string) => {
+    return this.axiosInstance.delete(DeleteRoom + `${roomId}`);
   };
 }
 export const {

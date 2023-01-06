@@ -1,5 +1,4 @@
 export const HotelEndPoint = '/hotels/';
-export const HotelEndPointDelete = '/hotels/';
 export const CountryEndpoint = '/general/country';
 export const StateEndpoint = '/general/state?country=';
 export const HotelImageEndPoint = '/hotel-images/';
@@ -12,3 +11,4 @@ export const SelectFacilityOptions = `/submit-facilities/`;
 export const SelectAminitiesOptions = `/submit-amenitie/`;
 export const SelectFacilitiesRemoveOption = `/submit-facilities/remove_option/`;
 export const RoomListByHotelId = `/rooms/?hotel=`;
+export const DeleteRoom = `/rooms/`;

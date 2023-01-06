@@ -31,13 +31,14 @@ export const CreatedRoomDisplay: FC = () => {
       style={{ padding: '0px 25px 0 25px', background: '#FFFFFF' }}
       {...layout}
       accordion={true}
+      defaultActiveKey={['1']}
       expandIconPosition="right"
       expandIcon={({ isActive }) => (
         <CaretRightOutlined rotate={isActive ? -270 : -180} />
       )}
       bordered={false}
     >
-      <Panel header="Room Amenities" key="1" style={customPanelStyle}>
+      <Panel header="Rooms" key="1" style={customPanelStyle}>
         <Row gutter={[16, 16]}>
           {roomList?.map((room) => (
             <Col span={8} key={room.id}>

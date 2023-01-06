@@ -12,6 +12,7 @@ import {
   HotelRoomsCreation,
 } from '../../views/hotel/types';
 import {
+  deletRoomList,
   fetchFacilites,
   fetchRoomFacilites,
   fetchRoomList,
@@ -185,6 +186,13 @@ export const hotelSlice = createSlice({
         (state.roomList = action.payload);
     }),
       builder.addCase(fetchRoomList.pending, (state, action) => {
+        state.roomListLoadingState = action.meta.requestStatus;
+      });
+    builder.addCase(deletRoomList.fulfilled, (state, action) => {
+      (state.roomListLoadingState = action.meta.requestStatus),
+        (state.roomList = action.payload);
+    }),
+      builder.addCase(deletRoomList.pending, (state, action) => {
         state.roomListLoadingState = action.meta.requestStatus;
       });
   },
