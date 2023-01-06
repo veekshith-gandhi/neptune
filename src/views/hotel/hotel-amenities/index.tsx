@@ -12,6 +12,7 @@ const { Title } = Typography;
 
 export const FacilitiesDetails: FunctionComponent = () => {
   const {
+    hotelId,
     progressPercentage,
     hotelFacilitiesList,
     hotelFacilitiesLoadingState,
@@ -24,7 +25,7 @@ export const FacilitiesDetails: FunctionComponent = () => {
   useEffect(() => {
     dispatch(fetchFacilites('HOTEL'));
   }, []);
-
+  if (!hotelId) return <p></p>;
   return (
     <Card
       style={{ margin: '5px 50px', maxHeight: 530 }}

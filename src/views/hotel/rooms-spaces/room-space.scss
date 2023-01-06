@@ -1,0 +1,35 @@
+.room-main-container {
+  display: flex;
+  .room-list-container {
+    height: 296px;
+    overflow: hidden;
+    overflow-y: auto;
+    p {
+      text-align: left;
+      box-shadow: 0px -2px 0px 0px #888888;
+      margin-bottom: 3px;
+    }
+  }
+  .room-child-container {
+    height: 250px;
+    overflow-y: auto;
+  }
+}
+.room-list-container {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.room-child-container {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.room-list-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.room-child-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.room-list-container p:hover {
+  color: rgb(158, 141, 141);
+  cursor: pointer;
+}

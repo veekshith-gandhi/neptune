@@ -10,7 +10,7 @@ import {
   HotelRoomPriceCreation,
   HotelRoomsCreation,
 } from '../../views/hotel/types';
-import { fetchFacilites } from './async-thunk';
+import { fetchFacilites, fetchRoomFacilites } from './async-thunk';
 
 interface AddHotelState {
   addBasicInfoLoadingState: AsyncThunkStates;
@@ -24,12 +24,16 @@ interface AddHotelState {
   room: HotelRoomsCreation;
   roomprice: HotelRoomPriceCreation;
   hotelFacilitiesLoadingState: AsyncThunkStates;
+  roomFacilitiesLoadingState: AsyncThunkStates;
   hotelFacilitiesList: FacilitiesEntity[] | undefined;
+  roomFacilitiesList: FacilitiesEntity[] | undefined;
 }
 
 const initialState: AddHotelState = {
   addBasicInfoLoadingState: 'idle',
   hotelFacilitiesLoadingState: 'idle',
+  roomFacilitiesLoadingState: 'idle',
+
   editHotelData: null,
   progressPercentage: 0,
   basic: {
@@ -76,6 +80,7 @@ const initialState: AddHotelState = {
   roomId: '',
   financeLegalId: '',
   hotelFacilitiesList: [],
+  roomFacilitiesList: [],
 };
 
 export const hotelSlice = createSlice({
@@ -159,6 +164,13 @@ export const hotelSlice = createSlice({
     }),
       builder.addCase(fetchFacilites.pending, (state, action) => {
         state.hotelFacilitiesLoadingState = action.meta.requestStatus;
+      });
+    builder.addCase(fetchRoomFacilites.fulfilled, (state, action) => {
+      (state.roomFacilitiesLoadingState = action.meta.requestStatus),
+        (state.roomFacilitiesList = action.payload);
+    }),
+      builder.addCase(fetchRoomFacilites.pending, (state, action) => {
+        state.roomFacilitiesLoadingState = action.meta.requestStatus;
       });
   },
 });

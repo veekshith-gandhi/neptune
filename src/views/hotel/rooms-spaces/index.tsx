@@ -1,6 +1,9 @@
-import { Card, notification, Progress, Space, Typography } from 'antd';
+import { Button, Card, notification, Progress, Space, Typography } from 'antd';
 import { FunctionComponent } from 'react';
+import { useDispatch } from 'react-redux';
+import { setProgressPercentage } from '../../../features/hotel/hotel-slice';
 import { useAppSelector } from '../../../store';
+import { RoomAmenities } from './room-amenities';
 import { RoomDetails } from './room-details';
 import { RoomPrice } from './room-price';
 
@@ -9,6 +12,7 @@ const { Title } = Typography;
 export const RoomsAndSpacesDetails: FunctionComponent = () => {
   const { progressPercentage } = useAppSelector((state) => state.hotel);
   const [api, contextHolder] = notification.useNotification();
+  const dispatch = useDispatch();
   return (
     <Card id="rooms-spaces-ref" style={{ margin: '5px 50px' }}>
       {contextHolder}
@@ -38,6 +42,23 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
       </div>
       <RoomDetails />
       <RoomPrice />
+      <RoomAmenities />
+      <Space>
+        <Button
+          onClick={() => {
+            api.success({ message: 'saved Success', placement: 'topRight' });
+            dispatch(setProgressPercentage(65));
+            document
+              ?.getElementById('rooms-spaces-ref')
+              ?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          style={{ marginTop: 20, marginLeft: 20 }}
+          type="primary"
+          htmlType="submit"
+        >
+          Save and Submit
+        </Button>
+      </Space>
     </Card>
   );
 };

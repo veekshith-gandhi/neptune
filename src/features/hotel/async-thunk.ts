@@ -13,3 +13,16 @@ export const fetchFacilites = createAsyncThunk(
     }
   }
 );
+
+export const fetchRoomFacilites = createAsyncThunk(
+  '/fetchRoomFacilites',
+  async (payload: string) => {
+    try {
+      const { data } = await fetchFacilitiesList(payload);
+      console.log(data);
+      return data;
+    } catch (error) {
+      return [];
+    }
+  }
+);

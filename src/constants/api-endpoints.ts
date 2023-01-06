@@ -8,4 +8,5 @@ export const Facilities = '/facilities/?type=';
 export const FacilityOptionsByID = (id: string) =>
   `/facilities-options/?facility=${id}`;
 export const SelectFacilityOptions = `/submit-facilities/`;
+export const SelectAminitiesOptions = `/submit-amenitie/`;
 export const SelectFacilitiesRemoveOption = `/submit-facilities/remove_option/`;

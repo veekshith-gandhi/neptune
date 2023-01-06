@@ -14,6 +14,7 @@ import {
   HotelEndPoint,
   HotelImageEndPoint,
   HotelRoomsEndPoint,
+  SelectAminitiesOptions,
   SelectFacilitiesRemoveOption,
   SelectFacilityOptions,
 } from '../constants/api-endpoints';
@@ -87,16 +88,32 @@ class HotelFormApiService extends BaseApiService {
       FacilityOptionsByID(id) + `&hotel=${hotelId}&type=HOTEL`
     );
   };
-
+  getRoomFacilityOptionsByID = (id: string, hotelId?: string) => {
+    return this.axiosInstance.get<FacilityOption[]>(
+      FacilityOptionsByID(id) + `&room=${hotelId}&type=ROOM`
+    );
+  };
   checkFacilityOptions = (hotelId: string, optionId: string) => {
     return this.axiosInstance.post(SelectFacilityOptions, {
       hotel: hotelId,
       options: optionId,
     });
   };
+  checkAminitieOptions = (roomId: string, optionId: string) => {
+    return this.axiosInstance.post(SelectAminitiesOptions, {
+      room: roomId,
+      options: optionId,
+    });
+  };
   uncheckFacilityOption = (hotelId: string, optionId: string) => {
     return this.axiosInstance.post(SelectFacilitiesRemoveOption, {
       hotel: hotelId,
+      options: optionId,
+    });
+  };
+  uncheckAminitieOption = (roomId: string, optionId: string) => {
+    return this.axiosInstance.post(SelectFacilitiesRemoveOption, {
+      room: roomId,
       options: optionId,
     });
   };
@@ -114,5 +131,8 @@ export const {
   getHotels,
   getFacilityOptionsByID,
   checkFacilityOptions,
+  getRoomFacilityOptionsByID,
   uncheckFacilityOption,
+  checkAminitieOptions,
+  uncheckAminitieOption,
 } = new HotelFormApiService();
