@@ -12,13 +12,14 @@ import {
 } from 'antd';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { fetchRoomList } from '../../../features/hotel/async-thunk';
 import {
   addRoomDetails,
   setProgressPercentage,
   setRoomId,
 } from '../../../features/hotel/hotel-slice';
 import { submitHotelRoomInformation } from '../../../services/hotel-api-service';
-import { useAppSelector } from '../../../store';
+import { AppDispatch, useAppSelector } from '../../../store';
 import { HotelRoomsCreation } from '../types';
 
 const Panel = Collapse.Panel;
@@ -36,7 +37,7 @@ const layout = {
 };
 export const RoomDetails: FC = () => {
   const { hotelId, roomId } = useAppSelector((state) => state.hotel);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [api, contextHolder] = notification.useNotification();
   const onFinishRooms = async (e: HotelRoomsCreation) => {
     try {
@@ -57,6 +58,7 @@ export const RoomDetails: FC = () => {
       dispatch(addRoomDetails(e));
       dispatch(setRoomId(data.id));
       dispatch(setProgressPercentage(40));
+      dispatch(fetchRoomList(hotelId));
       api.success({ message: 'saved Success', placement: 'topRight' });
     } catch (error) {
       api.error({ message: 'error', placement: 'topRight' });

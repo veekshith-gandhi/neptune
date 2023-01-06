@@ -12,13 +12,14 @@ import {
 import moment from 'moment';
 import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { fetchRoomList } from '../../../features/hotel/async-thunk';
 import {
   addRoomPrice,
   setProgressPercentage,
   setRoomId,
 } from '../../../features/hotel/hotel-slice';
 import { submitHotelRoomPriceInformation } from '../../../services/hotel-api-service';
-import { useAppSelector } from '../../../store';
+import { AppDispatch, useAppSelector } from '../../../store';
 import { HotelRoomPriceCreation } from '../types';
 
 const { RangePicker } = DatePicker;
@@ -37,7 +38,7 @@ const layout = {
 export const RoomPrice: FC = () => {
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { hotelId, roomId } = useAppSelector((state) => state.hotel);
 
   const [api, contextHolder] = notification.useNotification();
@@ -62,6 +63,7 @@ export const RoomPrice: FC = () => {
       dispatch(addRoomPrice(e));
       dispatch(setRoomId(data.id));
       dispatch(setProgressPercentage(50));
+      dispatch(fetchRoomList(hotelId));
       document
         ?.getElementById('property-photos-ref')
         ?.scrollIntoView({ behavior: 'smooth' });

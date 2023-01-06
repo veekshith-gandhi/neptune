@@ -1,5 +1,5 @@
-import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse } from 'antd';
+import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Collapse, Popconfirm, Row } from 'antd';
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchRoomList } from '../../../features/hotel/async-thunk';
@@ -18,7 +18,7 @@ const customPanelStyle = {
 };
 const Panel = Collapse.Panel;
 export const CreatedRoomDisplay: FC = () => {
-  const { hotelId } = useAppSelector((state) => state.hotel);
+  const { hotelId, roomList } = useAppSelector((state) => state.hotel);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     if (hotelId) {
@@ -37,7 +37,27 @@ export const CreatedRoomDisplay: FC = () => {
       )}
       bordered={false}
     >
-      <Panel header="Room Amenities" key="1" style={customPanelStyle}></Panel>
+      <Panel header="Room Amenities" key="1" style={customPanelStyle}>
+        <Row gutter={[16, 16]}>
+          {roomList?.map((room) => (
+            <Col span={8} key={room.id}>
+              <Card
+                title={room.room_name}
+                extra={
+                  <Popconfirm title="Delete the room">
+                    <Button>
+                      <DeleteOutlined />
+                    </Button>
+                  </Popconfirm>
+                }
+                bordered={true}
+              >
+                {room.description}
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Panel>
     </Collapse>
   );
 };

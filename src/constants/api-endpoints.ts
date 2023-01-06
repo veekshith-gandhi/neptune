@@ -1,4 +1,5 @@
 export const HotelEndPoint = '/hotels/';
+export const HotelEndPointDelete = '/hotels/';
 export const CountryEndpoint = '/general/country';
 export const StateEndpoint = '/general/state?country=';
 export const HotelImageEndPoint = '/hotel-images/';
