@@ -1,6 +1,7 @@
 import {
   CaretRightOutlined,
   DeleteOutlined,
+  EditOutlined,
   PlusOutlined,
   SmileOutlined,
 } from '@ant-design/icons';
@@ -20,7 +21,7 @@ import {
   deletRoomList,
   fetchRoomList,
 } from '../../../features/hotel/async-thunk';
-import { resetRoomId } from '../../../features/hotel/hotel-slice';
+import { resetRoomId, setRoomId } from '../../../features/hotel/hotel-slice';
 import { AppDispatch, useAppSelector } from '../../../store';
 
 const layout = {
@@ -73,20 +74,30 @@ export const CreatedRoomDisplay: FC = () => {
               <Card
                 title={room.room_name}
                 extra={
-                  <Popconfirm
-                    onConfirm={() => {
-                      dispatch(deletRoomList(room.id));
-                    }}
-                    title="Delete the room"
-                  >
-                    <Button>
-                      <DeleteOutlined />
-                    </Button>
-                  </Popconfirm>
+                  <>
+                    <Popconfirm
+                      onConfirm={() => {
+                        dispatch(deletRoomList(room.id));
+                      }}
+                      title="Delete the room"
+                    >
+                      <Button>
+                        <DeleteOutlined />
+                      </Button>
+                    </Popconfirm>
+                  </>
                 }
                 bordered={true}
               >
                 {room.description}
+                <Button
+                  style={{ marginLeft: 90 }}
+                  onClick={() => {
+                    dispatch(setRoomId(room.id));
+                  }}
+                >
+                  <EditOutlined className="mr-2" />
+                </Button>
               </Card>
             </Col>
           ))}

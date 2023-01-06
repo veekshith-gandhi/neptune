@@ -12,3 +12,4 @@ export const SelectAminitiesOptions = `/submit-amenitie/`;
 export const SelectFacilitiesRemoveOption = `/submit-facilities/remove_option/`;
 export const RoomListByHotelId = `/rooms/?hotel=`;
 export const DeleteRoom = `/rooms/`;
+export const MediaUpload = `/media_uploads`;

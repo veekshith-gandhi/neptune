@@ -12,7 +12,6 @@ import {
 import moment from 'moment';
 import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchRoomList } from '../../../features/hotel/async-thunk';
 import {
   addRoomPrice,
   setProgressPercentage,
@@ -63,7 +62,6 @@ export const RoomPrice: FC = () => {
       dispatch(addRoomPrice(e));
       dispatch(setRoomId(data.id));
       dispatch(setProgressPercentage(50));
-      dispatch(fetchRoomList(hotelId));
       document
         ?.getElementById('property-photos-ref')
         ?.scrollIntoView({ behavior: 'smooth' });

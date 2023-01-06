@@ -15,6 +15,7 @@ import {
   HotelEndPoint,
   HotelImageEndPoint,
   HotelRoomsEndPoint,
+  MediaUpload,
   RoomListByHotelId,
   SelectAminitiesOptions,
   SelectFacilitiesRemoveOption,
@@ -125,6 +126,9 @@ class HotelFormApiService extends BaseApiService {
   deletRoomInformation = (roomId: string) => {
     return this.axiosInstance.delete(DeleteRoom + `${roomId}/`);
   };
+  hotelMediaUpload = (fd: FormData) => {
+    return this.axiosInstance.post(MediaUpload, fd);
+  };
 }
 export const {
   submitBasicHotelInfo,
@@ -145,4 +149,5 @@ export const {
   uncheckAminitieOption,
   fetchListofRoomsCreated,
   deletRoomInformation,
+  hotelMediaUpload,
 } = new HotelFormApiService();

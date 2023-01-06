@@ -121,6 +121,9 @@ export const hotelSlice = createSlice({
     },
     resetEditHotelData: (state, action) => {
       state.editHotelData = null;
+      state.roomList = [];
+      state.hotelFacilitiesList = [];
+      state.roomFacilitiesList = [];
       state.progressPercentage = 0;
       state.basic = {
         contactNumber: '',
@@ -139,7 +142,6 @@ export const hotelSlice = createSlice({
         locality: '',
         lat: '',
       };
-
       state.hotelId = '';
       state.roomId = '';
       state.financeLegalId = '';
