@@ -150,6 +150,9 @@ export const hotelSlice = createSlice({
     addBasicInfo: (state, action: PayloadAction<HotelCreationBasicInput>) => {
       state.basic = action.payload;
     },
+    resetRoomId: (state, action) => {
+      state.roomId = action.payload;
+    },
     addLocationDetails: (state, action) => {
       state.location = action.payload;
     },
@@ -211,4 +214,5 @@ export const {
   setRoomId,
   setFinanceLegalId,
   addRoomPrice,
+  resetRoomId,
 } = hotelSlice.actions;

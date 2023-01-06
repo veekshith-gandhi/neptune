@@ -1,11 +1,26 @@
-import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Collapse, Popconfirm, Row } from 'antd';
+import {
+  CaretRightOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
+import {
+  Button,
+  Card,
+  Col,
+  Collapse,
+  Popconfirm,
+  Result,
+  Row,
+  Space,
+} from 'antd';
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   deletRoomList,
   fetchRoomList,
 } from '../../../features/hotel/async-thunk';
+import { resetRoomId } from '../../../features/hotel/hotel-slice';
 import { AppDispatch, useAppSelector } from '../../../store';
 
 const layout = {
@@ -29,7 +44,16 @@ export const CreatedRoomDisplay: FC = () => {
     }
   }, [hotelId]);
 
-  if (roomList.length == 0) return <p></p>;
+  if (roomList.length == 0)
+    return (
+      <Card style={{}}>
+        <Result
+          icon={<SmileOutlined />}
+          title="No rooms are created!"
+          extra={<Button type="primary">Add Rooms</Button>}
+        />
+      </Card>
+    );
   return (
     <Collapse
       style={{ padding: '0px 25px 0 25px', background: '#FFFFFF' }}
@@ -67,6 +91,14 @@ export const CreatedRoomDisplay: FC = () => {
             </Col>
           ))}
         </Row>
+        <Space style={{ marginTop: 20 }}>
+          <Button
+            onClick={() => dispatch(resetRoomId(''))}
+            icon={<PlusOutlined />}
+          >
+            Add Rooms
+          </Button>
+        </Space>
       </Panel>
     </Collapse>
   );
