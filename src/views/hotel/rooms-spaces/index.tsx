@@ -48,7 +48,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
       <Space>
         <Button
           onClick={() => {
-            api.success({ message: 'saved Success', placement: 'topRight' });
+            // api.success({ message: 'saved Success', placement: 'topRight' });
             dispatch(setProgressPercentage(65));
             document
               ?.getElementById('rooms-spaces-ref')
@@ -58,7 +58,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
           type="primary"
           htmlType="submit"
         >
-          Save and Submit
+          Save and Continue
         </Button>
       </Space>
     </Card>

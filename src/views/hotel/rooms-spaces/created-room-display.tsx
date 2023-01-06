@@ -46,7 +46,7 @@ export const CreatedRoomDisplay: FC = () => {
 
   if (roomList.length == 0)
     return (
-      <Card style={{}}>
+      <Card style={{ border: 'none' }}>
         <Result
           icon={<SmileOutlined />}
           title="No rooms are created!"
