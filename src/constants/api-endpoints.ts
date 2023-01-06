@@ -10,3 +10,4 @@ export const FacilityOptionsByID = (id: string) =>
 export const SelectFacilityOptions = `/submit-facilities/`;
 export const SelectAminitiesOptions = `/submit-amenitie/`;
 export const SelectFacilitiesRemoveOption = `/submit-facilities/remove_option/`;
+export const RoomListByHotelId = `/rooms/?hotel=`;

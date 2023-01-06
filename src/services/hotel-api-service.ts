@@ -14,6 +14,7 @@ import {
   HotelEndPoint,
   HotelImageEndPoint,
   HotelRoomsEndPoint,
+  RoomListByHotelId,
   SelectAminitiesOptions,
   SelectFacilitiesRemoveOption,
   SelectFacilityOptions,
@@ -117,6 +118,9 @@ class HotelFormApiService extends BaseApiService {
       options: optionId,
     });
   };
+  fetchListofRoomsCreated = (hotelId: string) => {
+    return this.axiosInstance.get(RoomListByHotelId + `${hotelId}`);
+  };
 }
 export const {
   submitBasicHotelInfo,
@@ -135,4 +139,5 @@ export const {
   uncheckFacilityOption,
   checkAminitieOptions,
   uncheckAminitieOption,
+  fetchListofRoomsCreated,
 } = new HotelFormApiService();

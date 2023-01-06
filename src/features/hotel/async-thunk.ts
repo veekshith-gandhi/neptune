@@ -1,12 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchFacilitiesList } from '../../services/hotel-api-service';
+import {
+  fetchFacilitiesList,
+  fetchListofRoomsCreated,
+} from '../../services/hotel-api-service';
 
 export const fetchFacilites = createAsyncThunk(
   '/fetchFacilites',
   async (payload: string) => {
     try {
       const { data } = await fetchFacilitiesList(payload);
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (error) {
       return [];
@@ -19,7 +22,20 @@ export const fetchRoomFacilites = createAsyncThunk(
   async (payload: string) => {
     try {
       const { data } = await fetchFacilitiesList(payload);
-      console.log(data);
+      // console.log(data);
+      return data;
+    } catch (error) {
+      return [];
+    }
+  }
+);
+
+export const fetchRoomList = createAsyncThunk(
+  '/fetchRoomList',
+  async (payload: string) => {
+    try {
+      const { data } = await fetchListofRoomsCreated(payload);
+      // console.log(data);
       return data;
     } catch (error) {
       return [];

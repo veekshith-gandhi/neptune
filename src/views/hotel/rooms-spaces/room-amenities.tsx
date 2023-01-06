@@ -40,7 +40,7 @@ export const RoomAmenities: FC = () => {
       bordered={false}
     >
       <Panel header="Room Amenities" key="1" style={customPanelStyle}>
-        <Card style={{ margin: '5px 50px', maxHeight: 430 }}>
+        <Card style={{ backgroundColor: '#f0f8ff', maxHeight: 430 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
               <p>Please select general facilities available at your property</p>
@@ -49,7 +49,7 @@ export const RoomAmenities: FC = () => {
           <div className="room-main-container">
             <div className="p-2 card" style={{ width: 250 }}>
               <strong className="border-bottom p-2 mb-2">Room Amenities</strong>
-              <div className="amenities-list-container">
+              <div className="room-list-container">
                 {roomFacilitiesList?.map((facility) => (
                   <Button
                     disabled={selectedAmenity === facility.id}

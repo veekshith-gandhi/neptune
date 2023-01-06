@@ -28,7 +28,7 @@ export const FacilitiesDetails: FunctionComponent = () => {
   if (!hotelId) return <p></p>;
   return (
     <Card
-      style={{ margin: '5px 50px', maxHeight: 530 }}
+      style={{ margin: '5px 50px', maxHeight: 540 }}
       id="amenities-container-ref"
     >
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -53,7 +53,10 @@ export const FacilitiesDetails: FunctionComponent = () => {
           </Space>
         </div>
       </div>
-      <div className="amenities-main-container">
+      <div
+        className="amenities-main-container"
+        style={{ backgroundColor: '#f0f8ff' }}
+      >
         <div className="p-2 card" style={{ width: 250 }}>
           <strong className="border-bottom p-2 mb-2">Hotel Amenities</strong>
           <div className="amenities-list-container">

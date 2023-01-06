@@ -3,6 +3,7 @@ import { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setProgressPercentage } from '../../../features/hotel/hotel-slice';
 import { useAppSelector } from '../../../store';
+import { CreatedRoomDisplay } from './created-room-display';
 import { RoomAmenities } from './room-amenities';
 import { RoomDetails } from './room-details';
 import { RoomPrice } from './room-price';
@@ -43,6 +44,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
       <RoomDetails />
       <RoomPrice />
       <RoomAmenities />
+      <CreatedRoomDisplay />
       <Space>
         <Button
           onClick={() => {
