@@ -6,6 +6,7 @@ import {
   FacilitiesEntity,
   FacilityOption,
   HotelEntity,
+  HotelPolicyEntity,
 } from '../@types/entity/hotel-entity';
 import {
   DeleteRoom,
@@ -14,6 +15,7 @@ import {
   FinanceLegal,
   HotelEndPoint,
   HotelImageEndPoint,
+  HotelPolicy,
   HotelRoomsEndPoint,
   MediaUpload,
   RoomListByHotelId,
@@ -129,6 +131,9 @@ class HotelFormApiService extends BaseApiService {
   hotelMediaUpload = (fd: FormData) => {
     return this.axiosInstance.post(MediaUpload, fd);
   };
+  hotelPolicy = (payload: HotelPolicyEntity) => {
+    return this.axiosInstance.post(HotelPolicy, payload);
+  };
 }
 export const {
   submitBasicHotelInfo,
@@ -150,4 +155,5 @@ export const {
   fetchListofRoomsCreated,
   deletRoomInformation,
   hotelMediaUpload,
+  hotelPolicy,
 } = new HotelFormApiService();

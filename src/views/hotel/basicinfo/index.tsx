@@ -82,7 +82,7 @@ export const Basicinfo: FunctionComponent = () => {
         style={{ display: 'flex', justifyContent: 'space-between' }}
       >
         <div>
-          <Title level={4}>Welcome to Ingo-MMT</Title>
+          <Title level={4}>Welcome to Travell App</Title>
           <p>Please fill in basic details of your property</p>
         </div>
         <div>

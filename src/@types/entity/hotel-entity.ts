@@ -66,3 +66,10 @@ export interface RoomList {
   available_to: string;
   hotel: string;
 }
+
+export interface HotelPolicyEntity {
+  check_in: string;
+  check_out: string;
+  cancellation_policies: number;
+  hotel: string;
+}
