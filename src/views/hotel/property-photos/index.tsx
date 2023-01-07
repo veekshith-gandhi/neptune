@@ -1,6 +1,5 @@
 import { CaretRightOutlined } from '@ant-design/icons';
 import {
-  Button,
   Card,
   Collapse,
   notification,
@@ -10,6 +9,7 @@ import {
 } from 'antd';
 
 import { FunctionComponent } from 'react';
+import { useAppSelector } from '../../../store';
 import { DeluxPhotos } from './delux-photos';
 import { HotelCardCreation } from './hotel-card';
 import { MixPhotos } from './mix-photos';
@@ -29,6 +29,7 @@ const layout = {
 const Panel = Collapse.Panel;
 export const PropertyPhotos: FunctionComponent = () => {
   const [api, contextHolder] = notification.useNotification();
+  const { progressPercentage } = useAppSelector((state) => state.hotel);
   return (
     <Card style={{ margin: '5px 50px' }}>
       {contextHolder}
@@ -42,7 +43,7 @@ export const PropertyPhotos: FunctionComponent = () => {
         </div>
         <div>
           <Progress
-            percent={40}
+            percent={progressPercentage}
             status="active"
             strokeColor={{ from: '#108ee9', to: '#87d068' }}
           />
@@ -50,7 +51,7 @@ export const PropertyPhotos: FunctionComponent = () => {
             <Progress
               type="circle"
               width={50}
-              percent={40}
+              percent={progressPercentage}
               strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
             />
           </Space>
@@ -76,9 +77,17 @@ export const PropertyPhotos: FunctionComponent = () => {
           <MixPhotos />
         </Panel>
       </Collapse>
-      <Button type="primary" htmlType="submit">
+      {/* <Button
+        type="primary"
+        htmlType="submit"
+        onClick={() => {
+          document
+            ?.getElementById('policies-ref')
+            ?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      >
         Save and Submit
-      </Button>
+      </Button> */}
     </Card>
   );
 };

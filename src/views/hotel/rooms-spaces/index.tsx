@@ -51,7 +51,7 @@ export const RoomsAndSpacesDetails: FunctionComponent = () => {
             // api.success({ message: 'saved Success', placement: 'topRight' });
             dispatch(setProgressPercentage(65));
             document
-              ?.getElementById('rooms-spaces-ref')
+              ?.getElementById('property-photos-ref')
               ?.scrollIntoView({ behavior: 'smooth' });
           }}
           style={{ marginTop: 20, marginLeft: 20 }}

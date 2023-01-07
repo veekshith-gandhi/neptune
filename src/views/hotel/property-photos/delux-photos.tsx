@@ -1,5 +1,7 @@
 import { Button, Collapse, Form, notification, Space, Upload } from 'antd';
 import { FC } from 'react';
+import { useDispatch } from 'react-redux';
+import { setProgressPercentage } from '../../../features/hotel/hotel-slice';
 import { hotelMediaUpload } from '../../../services/hotel-api-service';
 import { useAppSelector } from '../../../store';
 
@@ -15,6 +17,7 @@ const Panel = Collapse.Panel;
 export const DeluxPhotos: FC = () => {
   const { roomId } = useAppSelector((state) => state.hotel);
   const [api, contextHolder] = notification.useNotification();
+  const dispatch = useDispatch();
   const onFinish = async (e: any) => {
     if (roomId) {
       const { fileList } = e.deluxphotos;
@@ -26,15 +29,20 @@ export const DeluxPhotos: FC = () => {
       });
       try {
         await hotelMediaUpload(formdata);
+        api.success({ message: 'saved Success', placement: 'topRight' });
+        document
+          ?.getElementById('mixed-room-ref')
+          ?.scrollIntoView({ behavior: 'smooth' });
+        dispatch(setProgressPercentage(73));
       } catch (error) {
-        console.log(error);
+        api.error({ message: 'failed to upload', placement: 'topRight' });
       }
     }
   };
 
   return (
     <Form onFinish={onFinish}>
-      <div style={{ padding: 24, background: 'aliceblue' }}>
+      <div id="delux-room-ref" style={{ padding: 24, background: 'aliceblue' }}>
         {contextHolder}
         <Form.Item name={['deluxphotos']}>
           <Upload

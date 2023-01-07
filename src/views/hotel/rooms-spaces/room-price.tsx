@@ -62,9 +62,9 @@ export const RoomPrice: FC = () => {
       dispatch(addRoomPrice(e));
       dispatch(setRoomId(data.id));
       dispatch(setProgressPercentage(50));
-      document
-        ?.getElementById('property-photos-ref')
-        ?.scrollIntoView({ behavior: 'smooth' });
+      // document
+      //   ?.getElementById('property-photos-ref')
+      //   ?.scrollIntoView({ behavior: 'smooth' });
       api.success({ message: 'saved Success', placement: 'topRight' });
     } catch (error) {
       api.error({ message: 'error', placement: 'topRight' });

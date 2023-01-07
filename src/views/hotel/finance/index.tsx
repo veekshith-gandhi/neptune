@@ -51,7 +51,9 @@ const props: UploadProps = {
 
 export const FinanceDetails: FunctionComponent = () => {
   const [isDissabled, setIsDissabled] = useState(true);
-  const { hotelId, financeLegalId } = useAppSelector((state) => state.hotel);
+  const { hotelId, financeLegalId, progressPercentage } = useAppSelector(
+    (state) => state.hotel
+  );
   const dispatch = useDispatch();
   const [api, contextHolder] = notification.useNotification();
   const checkBoxChecking = (e: any) => {
@@ -110,7 +112,7 @@ export const FinanceDetails: FunctionComponent = () => {
         </div>
         <div>
           <Progress
-            percent={40}
+            percent={progressPercentage}
             status="active"
             strokeColor={{ from: '#108ee9', to: '#87d068' }}
           />
@@ -118,7 +120,7 @@ export const FinanceDetails: FunctionComponent = () => {
             <Progress
               type="circle"
               width={50}
-              percent={40}
+              percent={progressPercentage}
               strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
             />
           </Space>

@@ -104,7 +104,12 @@ export const CreatedRoomDisplay: FC = () => {
         </Row>
         <Space style={{ marginTop: 20 }}>
           <Button
-            onClick={() => dispatch(resetRoomId(''))}
+            onClick={() => {
+              document
+                ?.getElementById('rooms-spaces-ref')
+                ?.scrollIntoView({ behavior: 'smooth' });
+              dispatch(resetRoomId(''));
+            }}
             icon={<PlusOutlined />}
           >
             Add Rooms

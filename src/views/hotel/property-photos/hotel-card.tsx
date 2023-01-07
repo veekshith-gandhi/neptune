@@ -1,8 +1,19 @@
 import { DeleteOutlined } from '@ant-design/icons';
-import { Button, Card, Form, Popconfirm, Space, Upload } from 'antd';
+import {
+  Button,
+  Card,
+  Form,
+  notification,
+  Popconfirm,
+  Space,
+  Upload,
+} from 'antd';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { resetEditHotelData } from '../../../features/hotel/hotel-slice';
+import {
+  resetEditHotelData,
+  setProgressPercentage,
+} from '../../../features/hotel/hotel-slice';
 import {
   deleteHotelInformation,
   hotelMediaUpload,
@@ -18,6 +29,7 @@ const customPanelStyle = {
 };
 export const HotelCardCreation: FC = () => {
   const { hotelId, editHotelData } = useAppSelector((state) => state.hotel);
+  const [api, contextHolder] = notification.useNotification();
   const dispatch = useDispatch<AppDispatch>();
   const onFinish = async (e: any) => {
     const { fileList } = e.hotelimages;
@@ -31,17 +43,27 @@ export const HotelCardCreation: FC = () => {
     try {
       const data = await hotelMediaUpload(formdata);
       console.log(data);
+      api.success({ message: 'saved Success', placement: 'topRight' });
+      document
+        ?.getElementById('delux-room-ref')
+        ?.scrollIntoView({ behavior: 'smooth' });
+      dispatch(setProgressPercentage(70));
     } catch (error) {
-      console.log(error);
+      api.error({ message: 'failed to upload', placement: 'topRight' });
     }
   };
   const onClickFunction = async () => {
-    await deleteHotelInformation(editHotelData?.id);
-    dispatch(resetEditHotelData(''));
+    try {
+      await deleteHotelInformation(editHotelData?.id);
+      dispatch(resetEditHotelData(''));
+    } catch (error) {
+      api.error({ message: 'failed to delete', placement: 'topRight' });
+    }
   };
   return (
     <Form onFinish={onFinish}>
       <div>
+        {contextHolder}
         <div style={{ padding: 24, background: 'aliceblue', display: 'flex' }}>
           <Card
             style={{ width: 200, height: 200 }}
