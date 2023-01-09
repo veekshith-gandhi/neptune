@@ -16,6 +16,7 @@ import {
   Space,
   Typography,
 } from 'antd';
+import moment from 'moment';
 import { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { HotelEntity } from '../../../@types/entity/hotel-entity';
@@ -154,7 +155,11 @@ export const Basicinfo: FunctionComponent = () => {
           hasFeedback
           name="date"
         >
-          <DatePicker onChange={onChange} picker="year" />
+          <DatePicker
+            defaultValue={moment(basic?.date)}
+            onChange={onChange}
+            picker="year"
+          />
         </Form.Item>
 
         <Form.Item
