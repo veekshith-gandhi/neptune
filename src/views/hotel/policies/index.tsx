@@ -12,6 +12,9 @@ import Progress from 'antd/es/progress';
 import moment from 'moment';
 
 import { FC, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setPolicyId } from '../../../features/hotel/hotel-slice';
+import { hotelPolicy } from '../../../services/hotel-api-service';
 import { useAppSelector } from '../../../store';
 
 const { Title } = Typography;
@@ -21,9 +24,10 @@ const layout = {
 };
 const { Option } = Select;
 export const Policies: FC = () => {
-  const { progressPercentage, hotelId } = useAppSelector(
+  const { progressPercentage, hotelId, policyId } = useAppSelector(
     (state) => state.hotel
   );
+  const dispatch = useDispatch();
   const [api, contextHolder] = notification.useNotification();
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
@@ -34,13 +38,17 @@ export const Policies: FC = () => {
 
     console.log(e);
     try {
-      //   const { data } = await hotelPolicy({
-      //     check_in: checkIn,
-      //     hotel: hotelId,
-      //     check_out: checkOut,
-      //     cancellation_policies: +e.cancelationpolicy,
-      //   });
-      //   console.log(data);
+      const { data } = await hotelPolicy(
+        {
+          check_in: checkIn,
+          hotel: hotelId,
+          check_out: checkOut,
+          cancellation_policies: +e.cancelationpolicy,
+        },
+        policyId
+      );
+      dispatch(setPolicyId(data.id));
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -83,8 +91,8 @@ export const Policies: FC = () => {
             format={'h:mm:s a'}
             showNow
             onChange={(values: any) => {
-              const val1 = values ? moment(values[0])?.format('HH:MM') : '';
-              const val2 = values ? moment()?.format('HH:MM') : '';
+              const val1 = values ? moment(values[0])?.format('HH:MM:s') : '';
+              const val2 = values ? moment()?.format('HH:MM:s') : '';
               setCheckIn(val1);
               setCheckOut(val2);
             }}

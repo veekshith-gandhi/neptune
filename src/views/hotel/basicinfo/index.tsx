@@ -16,7 +16,7 @@ import {
   Space,
   Typography,
 } from 'antd';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { HotelEntity } from '../../../@types/entity/hotel-entity';
 import {
@@ -43,11 +43,14 @@ export const Basicinfo: FunctionComponent = () => {
   const { basic, hotelId, progressPercentage } = useAppSelector(
     (state) => state.hotel
   );
+  let year: any;
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    year = dateString;
+  };
   const [api, contextHolder] = notification.useNotification();
   const dispatch = useDispatch<AppDispatch>();
-  const [dateString, setDateString] = useState('');
   const onFinish = async (e: HotelCreationBasicInput) => {
-    e.date = dateString;
+    e.date = year;
     try {
       const { data } = await submitBasicHotelInfo<HotelEntity>(
         {
@@ -70,9 +73,6 @@ export const Basicinfo: FunctionComponent = () => {
     } catch (error) {
       api.error({ message: apiErrorParser(error), placement: 'topRight' });
     }
-  };
-  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    setDateString(dateString);
   };
   return (
     <Card style={{ margin: '5px 50px' }}>
@@ -108,15 +108,15 @@ export const Basicinfo: FunctionComponent = () => {
         fields={[
           {
             name: ['propertyName'],
-            value: basic.propertyName,
+            value: basic?.propertyName,
           },
           {
             name: ['starRating'],
-            value: basic.starRating,
+            value: basic?.starRating,
           },
           {
             name: ['contactNumber'],
-            value: basic.contactNumber,
+            value: basic?.contactNumber,
           },
           {
             name: ['email'],

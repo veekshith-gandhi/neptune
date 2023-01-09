@@ -5,7 +5,7 @@ import './header.scss';
 
 export const Header: FunctionComponent = () => {
   const { userDetails } = useAuthState();
-
+  let name = userDetails?.email;
   return (
     <div
       className="custom_header_container"
@@ -69,7 +69,7 @@ export const Header: FunctionComponent = () => {
             <img src="/images/pic1.8e176ab1.jpg" />
           </div>
           <div className="user_details_box">
-            <div className="user_name">{userDetails?.username || 'Admin'}</div>
+            <div className="user_name">{name?.split('@')[0] || 'Admin'}</div>
             <div className="user_role">
               <I18 tkey="Admin" />
             </div>

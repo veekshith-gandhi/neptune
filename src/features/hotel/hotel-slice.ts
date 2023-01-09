@@ -22,6 +22,7 @@ interface AddHotelState {
   addBasicInfoLoadingState: AsyncThunkStates;
   hotelId: string;
   roomId: string;
+  policyId: string;
   financeLegalId: string;
   basic: HotelCreationBasicInput;
   editHotelData: HotelEntity | null;
@@ -86,6 +87,7 @@ const initialState: AddHotelState = {
   },
   hotelId: '',
   roomId: '',
+  policyId: '',
   financeLegalId: '',
   hotelFacilitiesList: [],
   roomFacilitiesList: [],
@@ -170,6 +172,9 @@ export const hotelSlice = createSlice({
     setFinanceLegalId: (state, action) => {
       state.financeLegalId = action.payload;
     },
+    setPolicyId: (state, action) => {
+      state.policyId = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchFacilites.fulfilled, (state, action) => {
@@ -217,4 +222,5 @@ export const {
   setFinanceLegalId,
   addRoomPrice,
   resetRoomId,
+  setPolicyId,
 } = hotelSlice.actions;

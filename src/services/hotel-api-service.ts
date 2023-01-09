@@ -131,8 +131,11 @@ class HotelFormApiService extends BaseApiService {
   hotelMediaUpload = (fd: FormData) => {
     return this.axiosInstance.post(MediaUpload, fd);
   };
-  hotelPolicy = (payload: HotelPolicyEntity) => {
-    return this.axiosInstance.post(HotelPolicy, payload);
+  hotelPolicy = (payload: HotelPolicyEntity, id: string) => {
+    if (!id) {
+      return this.axiosInstance.post(HotelPolicy, payload);
+    }
+    return this.axiosInstance.patch(HotelPolicy + `${id}/`, payload);
   };
 }
 export const {
