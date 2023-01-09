@@ -128,21 +128,22 @@ export const RoomDetails: FC = () => {
             </Row>
             <Row gutter={[8, 24]}>
               <Col span={12}>
-                <Form.Item label="Bed Type" name={['bedtype']}>
-                  <Select placeholder="select Number" allowClear>
-                    <Option value="1">1</Option>
-                    <Option value="2">2</Option>
-                    <Option value="3">3</Option>
-                    <Option value="4">4</Option>
-                    <Option value="5">5</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
                 <Form.Item label="Meal option" name={['mealoption']}>
                   <Select placeholder="select Number" allowClear>
                     <Option value="yes">yes</Option>
                     <Option value="no">no</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name={['extrabed']}
+                  label="Extra Bed"
+                  rules={[{ required: true }]}
+                >
+                  <Select placeholder="Yes" allowClear>
+                    <Option value={true}>yes</Option>
+                    <Option value={false}>No</Option>
                   </Select>
                 </Form.Item>
               </Col>
@@ -157,18 +158,6 @@ export const RoomDetails: FC = () => {
                   <Select placeholder="select" allowClear>
                     <Option value={true}>yes</Option>
                     <Option value={false}>no</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name={['extrabed']}
-                  label="Extra Bed"
-                  rules={[{ required: true }]}
-                >
-                  <Select placeholder="Yes" allowClear>
-                    <Option value={true}>yes</Option>
-                    <Option value={false}>No</Option>
                   </Select>
                 </Form.Item>
               </Col>

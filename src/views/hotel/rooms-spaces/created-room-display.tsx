@@ -91,7 +91,7 @@ export const CreatedRoomDisplay: FC = () => {
               >
                 {room.description}
                 <Button
-                  style={{ marginLeft: 90 }}
+                  style={{ marginLeft: 200 }}
                   onClick={() => {
                     dispatch(setRoomId(room.id));
                   }}
