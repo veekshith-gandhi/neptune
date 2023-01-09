@@ -29,24 +29,25 @@ export const Policies: FC = () => {
   );
   const dispatch = useDispatch();
   const [api, contextHolder] = notification.useNotification();
+  const { editHotelData } = useAppSelector((state) => state.hotel);
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
 
   const onFinish = async (e: any) => {
     console.log(checkIn);
     console.log(checkOut);
-
-    console.log(e);
+    console.log('-=-=-=', editHotelData);
     try {
       const { data } = await hotelPolicy(
         {
           check_in: checkIn,
-          hotel: hotelId,
           check_out: checkOut,
           cancellation_policies: +e.cancelationpolicy,
+          hotel: hotelId,
         },
-        policyId
+        ''
       );
+      console.log(data);
       dispatch(setPolicyId(data.id));
       console.log(data);
     } catch (error) {
@@ -91,8 +92,8 @@ export const Policies: FC = () => {
             format={'h:mm:s a'}
             showNow
             onChange={(values: any) => {
-              const val1 = values ? moment(values[0])?.format('HH:MM:s') : '';
-              const val2 = values ? moment()?.format('HH:MM:s') : '';
+              const val1 = values ? moment(values[0])?.format('HH:MM') : '';
+              const val2 = values ? moment()?.format('HH:MM') : '';
               setCheckIn(val1);
               setCheckOut(val2);
             }}

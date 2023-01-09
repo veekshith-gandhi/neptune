@@ -21,7 +21,6 @@ export const DashboardTable: FunctionComponent<DashboardTableProps> = (
   const [hotelList, setHotelList] = useState<any[]>([]);
   async function fetchDetails() {
     const { data } = await getHotelInformation();
-    console.log(data);
     setHotelList(data);
   }
   useEffect(() => {

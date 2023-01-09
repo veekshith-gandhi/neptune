@@ -84,20 +84,20 @@ export const CreatedRoomDisplay: FC = () => {
                       <Button>
                         <DeleteOutlined />
                       </Button>
+                      <Button
+                        style={{ marginLeft: 2 }}
+                        onClick={() => {
+                          dispatch(setRoomId(room.id));
+                        }}
+                      >
+                        <EditOutlined className="mr-2" />
+                      </Button>
                     </Popconfirm>
                   </>
                 }
                 bordered={true}
               >
                 {room.description}
-                <Button
-                  style={{ marginLeft: 200 }}
-                  onClick={() => {
-                    dispatch(setRoomId(room.id));
-                  }}
-                >
-                  <EditOutlined className="mr-2" />
-                </Button>
               </Card>
             </Col>
           ))}
