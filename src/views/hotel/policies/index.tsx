@@ -32,7 +32,7 @@ export const Policies: FC = () => {
   const { editHotelData } = useAppSelector((state) => state.hotel);
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
-
+  // console.log(editHotelData.ho)
   const onFinish = async (e: any) => {
     console.log(checkIn);
     console.log(checkOut);
@@ -45,7 +45,7 @@ export const Policies: FC = () => {
           cancellation_policies: +e.cancelationpolicy,
           hotel: hotelId,
         },
-        ''
+        policyId
       );
       console.log(data);
       dispatch(setPolicyId(data.id));

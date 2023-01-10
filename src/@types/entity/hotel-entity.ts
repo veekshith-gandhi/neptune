@@ -6,6 +6,7 @@ export interface HotelEntity {
   hotel_name: null;
   hotel_type: string;
   rating: number;
+  hotel_policies: HotelPolicyEntity;
   taking_booking_since: string;
   contact_number: string;
   email: string;
@@ -72,4 +73,5 @@ export interface HotelPolicyEntity {
   check_out: string;
   cancellation_policies: number;
   hotel: string;
+  id?: string;
 }

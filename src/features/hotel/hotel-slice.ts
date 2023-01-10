@@ -22,7 +22,7 @@ interface AddHotelState {
   addBasicInfoLoadingState: AsyncThunkStates;
   hotelId: string;
   roomId: string;
-  policyId: string;
+  policyId: string | undefined;
   financeLegalId: string;
   basic: HotelCreationBasicInput;
   editHotelData: HotelEntity | null;
@@ -100,6 +100,7 @@ export const hotelSlice = createSlice({
   reducers: {
     setEditHotelData: (state, action: PayloadAction<HotelEntity>) => {
       state.editHotelData = action.payload;
+      state.policyId = action.payload.hotel_policies?.id;
       state.basic = {
         contactNumber: action.payload.contact_number,
         date: action.payload.taking_booking_since,
