@@ -68,11 +68,10 @@ class HotelFormApiService extends BaseApiService {
     }
     return this.axiosInstance.patch<T>(HotelRoomsEndPoint + `${id}/`, payload);
   };
-  submitFinanceLegalInformation = (fd: FormData, id: string) => {
+  submitFinanceLegalInformation = (fd: FormData, id: string | undefined) => {
     if (id) {
       return this.axiosInstance.patch(FinanceLegal + `${id}/`, fd);
     }
-    return this.axiosInstance.post(FinanceLegal, fd);
   };
   /**
    *
@@ -132,10 +131,9 @@ class HotelFormApiService extends BaseApiService {
     return this.axiosInstance.post(MediaUpload, fd);
   };
   hotelPolicy = (payload: HotelPolicyEntity, id: string | undefined) => {
-    if (!id) {
-      return this.axiosInstance.post(HotelPolicy, payload);
+    if (id) {
+      return this.axiosInstance.patch(HotelPolicy + `${id}/`, payload);
     }
-    return this.axiosInstance.patch(HotelPolicy + `${id}/`, payload);
   };
 }
 export const {

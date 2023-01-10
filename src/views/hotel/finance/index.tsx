@@ -2,7 +2,6 @@ import { CaretRightOutlined, UploadOutlined } from '@ant-design/icons';
 import {
   Button,
   Card,
-  Checkbox,
   Collapse,
   Form,
   Input,
@@ -15,12 +14,9 @@ import {
   Upload,
   UploadProps,
 } from 'antd';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  setFinanceLegalId,
-  setProgressPercentage,
-} from '../../../features/hotel/hotel-slice';
+import { setProgressPercentage } from '../../../features/hotel/hotel-slice';
 import { submitFinanceLegalInformation } from '../../../services/hotel-api-service';
 import { useAppSelector } from '../../../store';
 import { apiErrorParser } from '../../../utils/error-parser';
@@ -50,16 +46,11 @@ const props: UploadProps = {
 };
 
 export const FinanceDetails: FunctionComponent = () => {
-  const [isDissabled, setIsDissabled] = useState(true);
   const { hotelId, financeLegalId, progressPercentage } = useAppSelector(
     (state) => state.hotel
   );
   const dispatch = useDispatch();
   const [api, contextHolder] = notification.useNotification();
-  const checkBoxChecking = (e: any) => {
-    e.target.checked ? setIsDissabled(false) : setIsDissabled(true);
-  };
-
   const onFinish = async (e: any) => {
     if (!hotelId) {
       return api.error({
@@ -67,7 +58,6 @@ export const FinanceDetails: FunctionComponent = () => {
         placement: 'topRight',
       });
     }
-    console.log(e.panimage.fileList[0].originFileObj);
     const formData = new FormData();
     formData.append('pan_doc', e?.panimage?.fileList[0]?.originFileObj);
     formData.append(
@@ -79,17 +69,13 @@ export const FinanceDetails: FunctionComponent = () => {
     formData.append('account_holder_name', e.cardholdername);
     formData.append('ifsc', e.ifsccode);
     formData.append('pan_holder_name', e.panholdername);
+    formData.append('pan_card_id', e.pancardnumber);
     formData.append('pan_holder_dob', e.dateofbirth);
     formData.append('gst_number', e.gstnumber);
     formData.append('bank_nmae', e.bankname);
     formData.append('hotel', hotelId ? hotelId : '');
-    console.log('id', financeLegalId);
     try {
-      const { data } = await submitFinanceLegalInformation(
-        formData,
-        financeLegalId
-      );
-      dispatch(setFinanceLegalId(data.id));
+      await submitFinanceLegalInformation(formData, financeLegalId);
       dispatch(setProgressPercentage(100));
       api.success({ message: 'saved Success', placement: 'topRight' });
       document
@@ -277,23 +263,9 @@ export const FinanceDetails: FunctionComponent = () => {
             </div>
           </Panel>
         </Collapse>
-        <Form.Item
-          name={['checked']}
-          rules={[{ required: true }]}
-          valuePropName="checked"
-        >
-          <Checkbox
-            onChange={checkBoxChecking}
-            name="checked"
-            value={'checked'}
-          >
-            Final verification will be done through a third party. Please give
-            your consent in order to initiate the process
-          </Checkbox>
-        </Form.Item>
         <Form.Item>
           <Space>
-            <Button type="primary" disabled={isDissabled} htmlType="submit">
+            <Button type="primary" htmlType="submit">
               Save and Submit
             </Button>
           </Space>

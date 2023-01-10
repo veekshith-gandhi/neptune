@@ -7,6 +7,7 @@ export interface HotelEntity {
   hotel_type: string;
   rating: number;
   hotel_policies: HotelPolicyEntity;
+  finanace_legal: FinanceLegalEntity;
   taking_booking_since: string;
   contact_number: string;
   email: string;
@@ -74,4 +75,18 @@ export interface HotelPolicyEntity {
   cancellation_policies: number;
   hotel: string;
   id?: string;
+}
+export interface FinanceLegalEntity {
+  id?: string;
+  gst_number?: string;
+  bank_nmae?: string;
+  account_holder_name?: string;
+  ifsc?: string;
+  account_number?: string;
+  pan_holder_name?: any;
+  pan_card_id?: string;
+  pan_holder_dob?: string;
+  pan_doc?: string;
+  property_info?: string;
+  hotel?: string;
 }

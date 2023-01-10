@@ -40,7 +40,7 @@ const layout = {
 };
 
 export const Basicinfo: FunctionComponent = () => {
-  const { userDetails } = useAppSelector((state) => state.userReducer);
+  const { userDetails } = useAppSelector((state: any) => state.userReducer);
   const { basic, hotelId, progressPercentage } = useAppSelector(
     (state) => state.hotel
   );

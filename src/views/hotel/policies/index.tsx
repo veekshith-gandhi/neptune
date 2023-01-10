@@ -13,7 +13,6 @@ import moment from 'moment';
 
 import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setPolicyId } from '../../../features/hotel/hotel-slice';
 import { hotelPolicy } from '../../../services/hotel-api-service';
 import { useAppSelector } from '../../../store';
 
@@ -36,9 +35,8 @@ export const Policies: FC = () => {
   const onFinish = async (e: any) => {
     console.log(checkIn);
     console.log(checkOut);
-    console.log('-=-=-=', editHotelData);
     try {
-      const { data } = await hotelPolicy(
+      await hotelPolicy(
         {
           check_in: checkIn,
           check_out: checkOut,
@@ -47,9 +45,6 @@ export const Policies: FC = () => {
         },
         policyId
       );
-      console.log(data);
-      dispatch(setPolicyId(data.id));
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
